@@ -1,0 +1,27 @@
+// 40 40 40 0
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b^-1 * c * b * c * b^-1 * c * b, c^-1 * b^-1 * c * b^-1 * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+// 40 40 48 0
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b^-1 * c * b * c * b^-1 * c * b, c^-1 * b^-1 * c * b^-1 * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+// 40 40 54 0
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b^-1 * c * b * c * b^-1 * c * b, c^-1 * b^-1 * c * b^-1 * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+// 40 48 48 0
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b * c * b * c^-1 * b^-1 * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+// 40 48 54 0 2
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b * c * b * c^-1 * b^-1 * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_2 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b * c * b * c^-1 * b^-1 * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+// 40 54 54 0 2 8
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b * c^-1 * b^-1 * c^-1 * b * c * b^-1, c * b * c^-1 * b * c * b * c^-1 * b * c * b * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_2 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, c * b * c^-1 * b^-1 * c^-1 * b * c * b^-1, c * b * c^-1 * b * c * b * c^-1 * b * c * b * c^-1 * b, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_8 := Group<a, b, c | a^3, b^3, c^3, b * a^-1 * b * a * b * a^-1 * b * a, b^-1 * a^-1 * b * a^-1 * b^-1 * a^-1 * b * a^-1, b * c * b^-1 * c^-1 * b^-1 * c * b * c^-1, b * c * b^-1 * c * b * c * b^-1 * c * b * c * b^-1 * c, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+// 48 48 48 0 1
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b^-1 * a^-1 * b^-1 * a^-1, c * b * c * b * c^-1 * b^-1 * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b^-1 * a^-1 * b^-1 * a^-1, c * b * c * b * c^-1 * b^-1 * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+// 48 48 54 0
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b^-1 * a^-1 * b^-1 * a^-1, c * b * c * b * c^-1 * b^-1 * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+// 48 54 54 0 2 8
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b^-1 * a^-1 * b^-1 * a^-1, c * b * c^-1 * b^-1 * c^-1 * b * c * b^-1, c * b * c^-1 * b * c * b * c^-1 * b * c * b * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b^-1 * a^-1 * b^-1 * a^-1, c * b * c^-1 * b^-1 * c^-1 * b * c * b^-1, c * b * c^-1 * b * c * b * c^-1 * b * c * b * c^-1 * b, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_8 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b^-1 * a^-1 * b^-1 * a^-1, b * c * b^-1 * c^-1 * b^-1 * c * b * c^-1, b * c * b^-1 * c * b * c * b^-1 * c * b * c * b^-1 * c, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+// 54 54 54 0 2
+G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b^-1 * a * b * a^-1, b * a * b^-1 * a * b * a * b^-1 * a * b * a * b^-1 * a, c * b * c^-1 * b^-1 * c^-1 * b * c * b^-1, c * b * c^-1 * b * c * b * c^-1 * b * c * b * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b^-1 * a * b * a^-1, b * a * b^-1 * a * b * a * b^-1 * a * b * a * b^-1 * a, c * b * c^-1 * b^-1 * c^-1 * b * c * b^-1, c * b * c^-1 * b * c * b * c^-1 * b * c * b * c^-1 * b, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
