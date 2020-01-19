@@ -8,13 +8,31 @@ struct AutomaticStructure <: WordReduction end
 const GAP_EXECUTABLE = get(ENV, "GAP_EXECUTABLE", "gap")
 
 const PRODUCT_MATRIX_FUNCTIONS = """
-MetricBalls := function(rws, halfradius)
+MetricBalls := function(rws, radius)
     local l, basis, sizes, i;
-    l := EnumerateReducedWords(rws, 0, halfradius);;
+    l := EnumerateReducedWords(rws, 0, radius);;
     SortBy(l, Length);
-    sizes := [1..halfradius];
+    sizes := [1..radius];
     Apply(sizes, i -> Number(l, w -> Length(w) <= i));
     return [l, sizes];
+end;;
+
+MetricBalls := function(rws, gens, radius)
+    local elts, sgens, sizes, r, RwsReducedProduct;
+    RwsReducedProduct := function(x, y) return ReducedForm(rws, x*y); end;
+
+    elts := Union([Identity(gens[1])], gens);
+    sgens := elts;
+    sizes := [1, Length(elts)];
+    for r in [2..radius] do;
+        elts := SetX(elts, sgens, RwsReducedProduct);
+        Add(sizes, Length(elts));
+        if sizes[Length(sizes)] = sizes[Length(sizes)-1] then
+            break;
+        fi;
+    od;
+
+    return [elts, sizes{[2..Length(sizes)]}];
 end;;
 
 ProductMatrix := function(rws, basis, len)
@@ -79,21 +97,40 @@ after := Runtimes();;
 delta := after.user_time_children - before.user_time_children;;
 Print("$reduction time: \t", StringTime(delta), "\\n");
 
-t := Runtime();
-res := MetricBalls(rws,$(2halfradius));;
+t := Runtime();;
+
+A := MetricBalls(rws, [a,b,a^-1,b^-1], 10);;
+B := MetricBalls(rws, [b,c,b^-1,c^-1], 10);;
+C := MetricBalls(rws, [c,a,c^-1,a^-1], 10);;
+S := Union(A[1], B[1], C[1]);;
+S := Difference(S, [Identity(F)]);;
+Print("Sizes of generated subgroups: \\n", [A[2], B[2], C[2]], "\\n");
+
+res := MetricBalls(rws, S, $(2halfradius));;
 Print("Metric-Balls generation: \t", StringTime(Runtime()-t), "\\n");
-B := res[1];; sizes := res[2];;
+B := res[1];;
+sizes := res[2];;
 Print("Sizes of generated Balls: \t", sizes, "\\n");
 
-t := Runtime();
+SortBy(B,
+function(x)
+    if x = Identity(F) then;
+        return 0;
+    elif x in S then;
+        return Position(S,x);
+    fi;
+    return Length(S)+Length(x);
+end);;
+
+t := Runtime();;
 pm := ProductMatrix(rws, B, sizes[$halfradius]);;
 Print("Computing ProductMatrix: \t", StringTime(Runtime()-t), "\\n");
 
-S := EnumerateReducedWords(rws, 1, 1);
-S := List(S, s -> Position(B,s));
+# S := EnumerateReducedWords(rws, 1, 1);
+S_positions := List(S, s -> Position(B,s));
 
 SaveCSV("$(dir)/pm.csv", pm);
-SaveCSV("$(dir)/S.csv", [S]);
+SaveCSV("$(dir)/S.csv", [S_positions]);
 SaveCSV("$(dir)/sizes.csv", [sizes]);
 SaveCSV("$(dir)/B_$(2halfradius).csv", [B]);
 
