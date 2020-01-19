@@ -34,6 +34,8 @@ function check_propertyT(sett::PropertyT.Settings)
     end
 
     RG = parent(Δ)
+    load_basis!(RG, sett)
+    @assert iszero(aug(Δ))
 
     ELT = Δ^2;
     ELT_NAME = "Δ²"
@@ -53,4 +55,24 @@ function check_propertyT(sett::PropertyT.Settings)
     certified_λ = PropertyT.certify_SOS_decomposition(ELT, Δ, λ, Q, R=sett.halfradius)
 
     return PropertyT.interpret_results(sett, certified_λ)
+end
+
+function load_basis!(RG::GroupRing, sett::PropertyT.Settings)
+    basis_fn = joinpath(PropertyT.prepath(sett), "B_$(2sett.halfradius).csv")
+    return load_basis!(RG, basis_fn)
+end
+
+function load_basis!(RG::GroupRing, basis_file)
+    G = RG.group;
+    words = split(readline(basis_file), ", ")[2:end]
+
+    basis_ex = [Meta.parse(w) for w in words]
+    basis = [@eval begin a,b,c = $(gens(G)); $b_ex end for b_ex in basis_ex]
+    basis = pushfirst!(basis, one(G))
+    basis_dict = GroupRings.reverse_dict(basis)
+
+    RG.basis = basis
+    RG.basis_dict = basis_dict
+
+    return RG
 end
