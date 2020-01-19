@@ -43,8 +43,6 @@ function check_propertyT(sett::PropertyT.Settings)
     λ, P = PropertyT.approximate_by_SOS(sett, ELT, Δ,
         solverlog=PropertyT.filename(sett, :solverlog))
 
-    λ < 0 && @warn "Solver did not produce a valid solution!"
-
     P .= (P.+P')./2
 
     Q = real(sqrt(P))

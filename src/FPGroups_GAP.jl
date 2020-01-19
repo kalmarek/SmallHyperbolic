@@ -74,7 +74,7 @@ end;;
 """
 
 function product_matrix_GAP_code(reduction::Type{<:WordReduction},
-    G::FPGroup, dir, halfradius; maxeqns=100_000, infolevel=2)
+    G::FPGroup, dir, halfradius; maxeqns=100_000, infolevel=1)
     code = """
 LogTo("$(dir)/GAP.log");
 RequirePackage("kbmag");
@@ -83,13 +83,13 @@ SetInfoLevel(InfoRWS, $infolevel);
 $PRODUCT_MATRIX_FUNCTIONS
 $(GAP_code(G))
 
-# G:= SimplifiedFpGroup(G);
+# G:= SimplifiedFpGroup(G);;
 rws := KBMAGRewritingSystem(G);
-# ResetRewritingSystem(rws);
+# ResetRewritingSystem(rws);;
 O:=OptionsRecordOfKBMAGRewritingSystem(rws);;
-O.maxeqns := $maxeqns;
-O.maxstates := 1000*$maxeqns;
-#O.maxstoredlen := [100,100];
+O.maxeqns := $maxeqns;;
+O.maxstates := 1000*$maxeqns;;
+#O.maxstoredlen := [100,100];;
 
 before := Runtimes();;
 $reduction(rws);
