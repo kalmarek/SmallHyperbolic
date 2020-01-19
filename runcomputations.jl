@@ -23,12 +23,13 @@ include(joinpath("src", "utils.jl"))
 
 const HALFRADIUS = 3
 using SCS
-with_SCS() = with_optimizer(SCS.Optimizer,
+
+with_SCS(iters=30_000, acceleration=10) = with_optimizer(SCS.Optimizer,
     linear_solver=SCS.Direct,
-    max_iters=100_000,
+    max_iters=iters,
     eps=1e-9,
-    alpha=1.5,
-    acceleration_lookback=10,
+    alpha=(acceleration == 0 ? 1.95 : 1.5),
+    acceleration_lookback=acceleration,
     warm_start=true)
 
 groups = parse_grouppresentations("data/presentations_4_4_4.txt")
@@ -36,6 +37,8 @@ groups = parse_grouppresentations("data/presentations_3_3_4.txt")
 
 for (group_name, G) in groups
     @info "" group_name
-    check_propertyT(G, "log/$(group_name)_r$HALFRADIUS",
-    HALFRADIUS, Inf, AutomaticStructure)
+
+    check_propertyT(groups[group_name], "log/$(group_name)_r$HALFRADIUS",
+    HALFRADIUS, Inf, AutomaticStructure, with_SCS(50_000, 50))
+
 end

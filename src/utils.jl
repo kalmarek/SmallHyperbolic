@@ -1,11 +1,11 @@
 function check_propertyT(G::FPGroup, name::AbstractString,
-    halfradius::Integer=2, upper_bound=Inf, reduction=KnuthBendix; kwargs...)
+    halfradius::Integer=2, upper_bound=Inf, reduction=KnuthBendix, with_optimizer=with_SCS(), kwargs...)
 
     @info "GAP code defining group:\n $(GAP_code(G))"
     S = gens(G)
     S = unique([S; inv.(S)])
 
-    sett = PropertyT.Settings(name, G, S, with_SCS();
+    sett = PropertyT.Settings(name, G, S, with_optimizer;
             halfradius=halfradius, upper_bound=upper_bound, force_compute=true)
 
     fp = PropertyT.fullpath(sett)
