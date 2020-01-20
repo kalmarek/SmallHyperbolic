@@ -53,9 +53,14 @@ let GROUP = ARGS[1]
         λ = check_propertyT(groups[GROUP], group_name,
         HALFRADIUS, Inf, AutomaticStructure, with_SCS(100_000, 50))
 
-        if λ > 1e-2 # there is still a chance to detect spectral gap
+        if λ > 0.01 # there is still a chance to detect spectral gap
+            new_λ = round(0.8λ, sigdigits=2)
+            new_dir = joinpath(group_name, "$new_λ")
+            mkpath(new_dir)
+            cp(joinpath(group_name, "Inf", "warmstart.jld"), new_dir)
+
             check_propertyT(groups[GROUP], group_name,
-            HALFRADIUS, Inf, AutomaticStructure, with_SCS(500_000, 0))
+            HALFRADIUS, new_λ, AutomaticStructure, with_SCS(500_000, 0))
         end
     end
 end
