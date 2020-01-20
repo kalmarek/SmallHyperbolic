@@ -1,5 +1,6 @@
 [deps]
 AbstractAlgebra = "c3fe647b-3220-5bb0-a1ea-a7954cac585d"
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 GroupRings = "0befed6a-bd73-11e8-1e41-a1190947c2f5"
 Groups = "5d8bd718-bd84-11e8-3b40-ad14f4a32557"
 Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"

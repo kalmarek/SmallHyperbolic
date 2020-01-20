@@ -1,4 +1,3 @@
-using JLD
 using DelimitedFiles
 
 abstract type WordReduction end
