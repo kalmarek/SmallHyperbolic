@@ -35,6 +35,13 @@ function check_propertyT(sett::PropertyT.Settings)
 
     RG = parent(Δ)
     load_basis!(RG, sett)
+
+    S = gens(RG.group)
+    S = unique!([S; inv.(S)])
+
+    Δ = RG(length(S)) - sum(RG(s) for s in S) # small Laplacian
+    @info "Checking the positivity of" Δ
+
     @assert iszero(aug(Δ))
 
     ELT = Δ^2;
