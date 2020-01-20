@@ -1,3 +1,4 @@
+using Logging
 using PropertyT
 
 using PropertyT.LinearAlgebra
@@ -21,7 +22,7 @@ include(joinpath("src", "FPGroups_GAP.jl"))
 include(joinpath("src", "groupparse.jl"))
 include(joinpath("src", "utils.jl"))
 
-const HALFRADIUS = 3
+const HALFRADIUS = 1
 using SCS
 
 with_SCS(iters=30_000, acceleration=10) = with_optimizer(SCS.Optimizer,
@@ -32,13 +33,27 @@ with_SCS(iters=30_000, acceleration=10) = with_optimizer(SCS.Optimizer,
     acceleration_lookback=acceleration,
     warm_start=true)
 
-groups = parse_grouppresentations("data/presentations_4_4_4.txt")
-groups = parse_grouppresentations("data/presentations_3_3_4.txt")
+groups334 = parse_grouppresentations("data/presentations_3_3_4.txt")
+groups344 = parse_grouppresentations("data/presentations_3_4_4.txt")
+groups444 = parse_grouppresentations("data/presentations_4_4_4.txt")
 
-for (group_name, G) in groups
-    @info "" group_name
+groups = merge(groups334, groups344, groups444)
 
-    check_propertyT(groups[group_name], "log/$(group_name)_r$HALFRADIUS",
-    HALFRADIUS, Inf, AutomaticStructure, with_SCS(50_000, 50))
+@assert length(ARGS) == 1
 
+let GROUP = ARGS[1]
+    @assert haskey(groups, GROUP)
+    group_name = "log2/$(GROUP)_r$(HALFRADIUS)"
+    open(joinpath(group_name, "full.log"), "a+") do logfile
+        logger = SimpleLogger(logfile)
+        global_logger(logger)
+
+        @info "" group_name
+        check_propertyT(groups[GROUP], group_name,
+        HALFRADIUS, Inf, AutomaticStructure, with_SCS(100_000, 50))
+
+        check_propertyT(groups[GROUP], group_name,
+        HALFRADIUS, Inf, AutomaticStructure, with_SCS(1_000_000, 0))
+    end
+    true # to keep make happy
 end
