@@ -43,7 +43,7 @@ groups = merge(groups334, groups344, groups444)
 
 let GROUP = ARGS[1]
     @assert haskey(groups, GROUP)
-    group_name = "log2/$(GROUP)_r$(HALFRADIUS)"
+    group_name = "log/$(GROUP)_r$(HALFRADIUS)"
     open(joinpath(group_name, "full.log"), "a+") do logfile
         logger = SimpleLogger(logfile)
         global_logger(logger)
