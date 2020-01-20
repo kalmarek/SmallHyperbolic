@@ -50,11 +50,12 @@ let GROUP = ARGS[1]
         global_logger(logger)
 
         @info "" group_name
-        check_propertyT(groups[GROUP], group_name,
+        λ = check_propertyT(groups[GROUP], group_name,
         HALFRADIUS, Inf, AutomaticStructure, with_SCS(100_000, 50))
 
-        check_propertyT(groups[GROUP], group_name,
-        HALFRADIUS, Inf, AutomaticStructure, with_SCS(1_000_000, 0))
+        if λ > 1e-2 # there is still a chance to detect spectral gap
+            check_propertyT(groups[GROUP], group_name,
+            HALFRADIUS, Inf, AutomaticStructure, with_SCS(500_000, 0))
+        end
     end
-    true # to keep make happy
 end

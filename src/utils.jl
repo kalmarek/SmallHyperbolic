@@ -44,8 +44,8 @@ function check_propertyT(sett::PropertyT.Settings)
 
     @assert iszero(aug(Δ))
 
-    ELT = Δ^2;
-    ELT_NAME = "Δ²"
+    ELT = 100*(Δ^2);
+    ELT_NAME = "100Δ²"
 
     λ, P = PropertyT.approximate_by_SOS(sett, ELT, Δ,
         solverlog=PropertyT.filename(sett, :solverlog))
@@ -59,7 +59,8 @@ function check_propertyT(sett::PropertyT.Settings)
 
     certified_λ = PropertyT.certify_SOS_decomposition(ELT, Δ, λ, Q, R=sett.halfradius)
 
-    return PropertyT.interpret_results(sett, certified_λ)
+    PropertyT.interpret_results(sett, certified_λ/100)
+    return certified_λ/100
 end
 
 function load_basis!(RG::GroupRing, sett::PropertyT.Settings)
