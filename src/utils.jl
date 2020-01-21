@@ -60,7 +60,8 @@ function check_propertyT(sett::PropertyT.Settings)
     certified_λ = PropertyT.certify_SOS_decomposition(ELT, Δ, λ, Q, R=sett.halfradius)
 
     PropertyT.interpret_results(sett, certified_λ/100)
-    return certified_λ/100
+
+    return certified_λ/100, λ/100
 end
 
 function load_basis!(RG::GroupRing, sett::PropertyT.Settings)
