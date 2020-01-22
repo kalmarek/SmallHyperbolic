@@ -57,7 +57,7 @@ let GROUP = ARGS[1]
             new_λ = round(0.8λ, sigdigits=2)
             new_dir = joinpath(group_name, "$new_λ")
             mkpath(new_dir)
-            cp(joinpath(group_name, "Inf", "warmstart.jld"), new_dir)
+            cp(joinpath(group_name, "Inf", "warmstart.jld"), new_dir, force=true)
 
             check_propertyT(groups[GROUP], group_name,
             HALFRADIUS, new_λ, AutomaticStructure, with_SCS(500_000, 0))
