@@ -29,20 +29,19 @@ function parse_grouppresentations(filename::AbstractString)
     groups = Dict{String, FPGroup}()
 
     names_idcs = findall(x->startswith(x, "//"), groups_strs)
-    push!(names_idcs, names_idcs[end]+1)
+    push!(names_idcs, length(groups_strs)+1)
 
     for (first_idx, next_idx) in zip(names_idcs, Iterators.rest(names_idcs, 2))
 
-        m = match(r"//\s?((\d{2}\s){2}\d\d).*", groups_strs[first_idx])
-
-        name = replace(m.captures[1], " "=>"_")
+        m = match(r"//\s?((\d{2}\s?){3}).*", groups_strs[first_idx])
+        name = replace(strip(m.captures[1]), " "=>"_")
         for idx in first_idx+1:next_idx-1
-            m = match(r"(.*)\s:=\sGroup<(.*)\|(.*)>", groups_strs[idx])
+            m = match(r"G((_\d\d){3})?_(\d+)\s:=\sGroup<(.*)\|(.*)>", groups_strs[idx])
             if isnothing(m)
-                @warn "Can't parse presentation at line $idx:\n $(str[idx])"
+                @warn "Can't parse presentation at line $idx:\n $(groups_strs[idx])"
             else
-                group_name = "$(name)_$(m.captures[1])"
-                G = parse_magma_grouppresentation(m.captures[2], m.captures[3])
+                group_name = "$(name)_$(m.captures[3])"
+                G = parse_magma_grouppresentation(m.captures[4], m.captures[5])
                 groups[group_name] = G
             end
         end
