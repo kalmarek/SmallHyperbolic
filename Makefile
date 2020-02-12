@@ -6,12 +6,14 @@ GROUPS344 = 14_40_40_0 14_40_48_0 14_40_54_0 14_40_54_2 14_48_48_0 14_48_48_1 14
 
 GROUPS444 = 40_40_40_0 40_40_48_0 40_40_54_0 40_48_48_0 40_48_54_0 40_48_54_2 40_54_54_0 40_54_54_2 40_54_54_8 48_48_48_0 48_48_48_1 48_48_54_0 48_54_54_0 48_54_54_2 48_54_54_8 54_54_54_0 54_54_54_2
 
+GROUPS555 = H_1 H_2 H_3 H_4 H_5 H_6 H_7 H_8
+
 
 JULIA = /opt/bin/julia
 
-.PHONY: allgroups groups333 groups334 groups344 groups444 $(GROUPS334) $(GROUPS344) $(GROUPS444)
+.PHONY: allgroups groups333 groups334 groups344 groups444 groups555 $(GROUPS334) $(GROUPS344) $(GROUPS444) $(GROUPS555)
 
-allgroups: groups334 groups344 groups444
+allgroups: groups334 groups344 groups444 group555
 
 groups333: $(GROUPS333)
 
@@ -21,7 +23,9 @@ groups344: $(GROUPS344)
 
 groups444: $(GROUPS444)
 
-$(GROUPS333) $(GROUPS334) $(GROUPS344) $(GROUPS444):
+groups555: $(GROUPS555)
+
+$(GROUPS333) $(GROUPS334) $(GROUPS344) $(GROUPS444) $(GROUPS555):
 	@echo "Checking property (T) for" $@
 	@mkdir -p log
 	$(JULIA) --project=. runcomputations.jl $@ &>> log/$@.log

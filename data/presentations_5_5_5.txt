@@ -1,0 +1,22 @@
+/////////////
+/// Groups with property (T), hyperbolicity unknown
+/////////////
+// H_1
+H_1:=Group<a, b, c |a^5, b^5, c^5, comm(a, b, a), comm(a, b, b), comm(b,c,b),comm(b,c,c), comm(a,c,a), comm(a,c,c)>;
+// H_2
+H_2:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a * b^-2 * a^2, comm(b,c,b),comm(b,c,c), comm(a,c,a),comm(a,c,c)>;
+// H_3
+H_3:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a * b^-2 * a^2, b^-1 * c * b * c^-1 * b * c, c^-2 * b * c * b * c^-2 * b^2, comm(a,c,a),comm(a,c,c)>;
+// H_4
+H_4:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a * b^-2 * a^2, b^-1 * c * b * c^-1 * b * c, c^-2 * b * c * b * c^-2 * b^2, a^-1 * c * a * c^-1 * a * c, c^-2 * a * c * a * c^-2 * a^2>;
+/////////////
+/// Infinite hyperbolic groups, property (T) unknown
+/////////////
+// H_5
+H_5:=Group<a, b, c |a^5, b^5, c^5, comm(a, b, a), comm(a, b, b), comm(b,c,b),comm(b,c,c), comm(a,c,a),comm(a,c,c,a),comm(a,c,c,c)>;
+// H_6
+H_6:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a * b^-2 * a^2, comm(b,c,b),comm(b,c,c), comm(a,c,a),comm(a,c,c,a),comm(a,c,c,c)>;
+// H_7
+H_7:=Group<a, b, c |a^5, b^5, c^5, comm(a, b, a), comm(a, b, b), b^-1 * c * b * c^-1 * b * c, c^-2 * b * c * b * c^-2 * b^2, comm(a,c,a), comm(a,c,c,a), comm(a,c,c,c)>;
+//H_8
+H_8:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a * b^-2 * a^2, b^-1 * c * b * c^-1 * b * c, c^-2 * b * c * b * c^-2 * b^2, comm(a,c,a), comm(a,c,c,a), comm(a,c,c,c)>;

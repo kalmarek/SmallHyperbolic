@@ -37,8 +37,10 @@ groups333 = parse_grouppresentations("data/presentations_3_3_3.txt")
 groups334 = parse_grouppresentations("data/presentations_3_3_4.txt")
 groups344 = parse_grouppresentations("data/presentations_3_4_4.txt")
 groups444 = parse_grouppresentations("data/presentations_4_4_4.txt")
+groups555 = parse_grouppresentations("data/presentations_5_5_5.txt")
 
-groups = merge(groups333, groups334, groups344, groups444)
+
+groups = merge(groups333, groups334, groups344, groups444, groups555)
 
 @assert length(ARGS) == 1
 
