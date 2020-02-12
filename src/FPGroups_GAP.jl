@@ -92,6 +92,7 @@ O.maxstates := 1000*$maxeqns;;
 
 before := Runtimes();;
 $reduction(rws);
+KnuthBendix(rws);
 after := Runtimes();;
 delta := after.user_time_children - before.user_time_children;;
 Print("$reduction time: \t", StringTime(delta), "\\n");
