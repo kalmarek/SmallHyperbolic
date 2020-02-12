@@ -1,123 +1,123 @@
 // 14 14 40 0 4
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_14_14_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
+G_14_14_40_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 14 14 48 0 1 4 5
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_5 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_14_14_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_14_14_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
+G_14_14_48_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_14_14_48_5 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 14 14 54 0 4
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_14_14_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c^-1 * b^-1 * c * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_14_14_54_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c^-1 * b * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
 // 14 16 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_14_16_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 14 16 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_14_16_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_14_16_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 14 16 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_14_16_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_14_16_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b^-1 * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 14 18 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_14_18_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 14 18 48 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+G_14_18_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
 // 14 18 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_14_18_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_14_18_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 14 24 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_14_24_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 14 24 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_14_24_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_14_24_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 14 24 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_14_24_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_14_24_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 14 26 40 0 4
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_14_26_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
+G_14_26_40_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 14 26 48 0 1 4 5
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_5 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_14_26_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_14_26_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
+G_14_26_48_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_14_26_48_5 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 14 26 54 0 2 4 6
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_6 := Group<a, b, c | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_14_26_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_14_26_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
+G_14_26_54_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_14_26_54_6 := Group< a, b, c  | a^3, b^3, c^3, b * a * b^-1 * a^-1 * b * a, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 16 16 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_16_16_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 16 16 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_16_16_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_16_16_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 16 16 54 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_16_16_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b^-1 * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
 // 16 18 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_16_18_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 16 18 48 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+G_16_18_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
 // 16 18 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_16_18_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_16_18_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 16 24 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_16_24_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 16 24 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_16_24_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_16_24_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 16 24 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_16_24_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_16_24_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 16 26 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_16_26_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 16 26 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_16_26_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_16_26_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 16 26 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_16_26_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_16_26_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a^-1 * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 18 18 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_18_18_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 18 18 48 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+G_18_18_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
 // 18 18 54 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_18_18_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b^-1 * c * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
 // 18 24 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_18_24_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 18 24 48 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+G_18_24_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
 // 18 24 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_18_24_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_18_24_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 18 26 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_18_26_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 18 26 48 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
+G_18_26_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
 // 18 26 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_18_26_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_18_26_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a^-1 * b * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 24 24 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_24_24_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 24 24 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_24_24_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_24_24_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 24 24 54 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_24_24_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b^-1 * c * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
 // 24 26 40 0
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_24_26_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 24 26 48 0 1
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_24_26_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_24_26_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 24 26 54 0 2
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_2 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a>;
+G_24_26_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_24_26_54_2 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a^-1 * b * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, c * a * c^-1 * a^-1 * c^-1 * a * c * a^-1, c * a * c^-1 * a * c * a * c^-1 * a * c * a * c^-1 * a >
 // 26 26 40 0 4
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1>;
+G_26_26_40_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
+G_26_26_40_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c * a * c^-1 * a * c, a^-1 * c^-1 * a * c^-1 * a^-1 * c^-1 * a * c^-1 >
 // 26 26 48 0 1 4 5
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_1 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1>;
-G_5 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c>;
+G_26_26_48_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_26_26_48_1 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
+G_26_26_48_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a * c * a^-1 * c^-1 * a^-1 * c^-1 >
+G_26_26_48_5 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c^-1 * a * c^-1 * a^-1 * c * a^-1 * c >
 // 26 26 54 0 4
-G_0 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
-G_4 := Group<a, b, c | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c>;
+G_26_26_54_0 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b * c * b * c * b, c * b * c^-1 * b * c^-1 * b * c^-1 * b^-1, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >
+G_26_26_54_4 := Group< a, b, c  | a^3, b^3, c^3, b * a * b * a * b * a, b * a * b^-1 * a * b^-1 * a * b^-1 * a^-1, c * b^-1 * c * b^-1 * c * b^-1, c * b^-1 * c^-1 * b^-1 * c^-1 * b^-1 * c^-1 * b, a * c * a^-1 * c^-1 * a^-1 * c * a * c^-1, a * c * a^-1 * c * a * c * a^-1 * c * a * c * a^-1 * c >

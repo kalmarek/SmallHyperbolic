@@ -1,17 +1,39 @@
-function parse_magma_grouppresentation(str::AbstractString)
-    m = match(r".*Group<(.*)\|(.*)>", str)
-    gens_str = strip.(split(m.captures[1], ", "))
-    rels_str = strip.(split(m.captures[2], ", "))
-    return parse_magma_grouppresentation(gens_str, rels_str)
+comm(a,b) = inv(a)*inv(b)*a*b
+comm(a,b,args...) = comm(comm(a,b), args...)
+
+const MAGMA_PRESENTATION_regex = r"Group<\s?(?<gens>.*)\s?\|\s?(?<rels>.*)\s?>"
+const COMMUTATOR_regex = r"\((?<comm>[\w](\s?,\s?[\w]){1+})\)"
+iscomment(line) = startswith(line, "//")
+ismagma_presentation(line) = (m = match(MAGMA_PRESENTATION_regex, line); return !isnothing(m), m)
+
+function parse_magma_fpgroup(str::AbstractString)
+    m = match(MAGMA_PRESENTATION_regex, str)
+    gens_str = strip.(split(m[:gens], ","))
+    rels_str = m[:rels]
+    split_indices = [0]
+    in_function_call=0
+    for (i,s) in enumerate(rels_str)
+        if s == '('
+            in_function_call += 1
+        elseif s == ')'
+            @assert in_function_call > 0
+            in_function_call -= 1
+        elseif s == ',' && iszero(in_function_call)
+            push!(split_indices, i)
+        end
+    end
+    @assert in_function_call == 0
+    push!(split_indices, length(rels_str)+1)
+
+    rels_strs = [strip.(String(rels_str[s+1:e-1])) for (s,e) in zip(split_indices, Iterators.rest(split_indices, 2))]
+
+    # rels_strs = replace.(rels_strs, COMMUTATOR_regex=> s"comm(\g<comm>)")
+    # @show rels_strs
+
+    return parse_magma_fpgroup(gens_str, rels_strs)
 end
 
-parse_magma_grouppresentation(gens_str::AbstractString, rels_str::AbstractString) =
-    parse_magma_grouppresentation(
-        strip.(split(gens_str, ", ")),
-        strip.(split(rels_str, ", "))
-        )
-
-function parse_magma_grouppresentation(gens_str::AbstractVector{<:AbstractString}, rels_str::AbstractVector{<:AbstractString})
+function parse_magma_fpgroup(gens_str::AbstractVector{<:AbstractString}, rels_str::AbstractVector{<:AbstractString})
     rels_expr = Meta.parse.(rels_str)
     expr = :([$(rels_expr...)])
 
@@ -25,25 +47,24 @@ function parse_magma_grouppresentation(gens_str::AbstractVector{<:AbstractString
 end
 
 function parse_grouppresentations(filename::AbstractString)
-    groups_strs = readlines(filename)
+    lines = strip.(readlines(filename))
     groups = Dict{String, FPGroup}()
-
-    names_idcs = findall(x->startswith(x, "//"), groups_strs)
-    push!(names_idcs, length(groups_strs)+1)
-
-    for (first_idx, next_idx) in zip(names_idcs, Iterators.rest(names_idcs, 2))
-
-        m = match(r"//\s?((\d{2}\s?){3}).*", groups_strs[first_idx])
-        name = replace(strip(m.captures[1]), " "=>"_")
-        for idx in first_idx+1:next_idx-1
-            m = match(r"G((_\d\d){3})?_(\d+)\s:=\sGroup<(.*)\|(.*)>", groups_strs[idx])
-            if isnothing(m)
-                @warn "Can't parse presentation at line $idx:\n $(groups_strs[idx])"
-            else
-                group_name = "$(name)_$(m.captures[3])"
-                G = parse_magma_grouppresentation(m.captures[4], m.captures[5])
-                groups[group_name] = G
+    group_regex = r"(?<name>\w.*)\s?:=\s?(?<group_str>Group.*)"
+    for line in lines
+        isempty(line) && continue
+        iscomment(line) && continue
+        m = match(group_regex, line)
+        if isnothing(m)
+            @warn "Can't parse presentation line\n $line"
+            continue
+        else
+            name = strip(m[:name])
+            group_str = m[:group_str]
+            G = parse_magma_fpgroup(group_str)
+            if startswith(name, "G_")
+                name = name[3:end]
             end
+            groups[name] = G
         end
     end
     return groups
