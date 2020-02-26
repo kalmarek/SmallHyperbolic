@@ -53,11 +53,11 @@ let GROUP = ARGS[1]
         global_logger(logger)
 
         @info "" group_name
-        certified_λ, λ = check_propertyT(groups[GROUP], group_name,
+        spectral_gap, λ = check_propertyT(groups[GROUP], group_name,
         HALFRADIUS, Inf, AutomaticStructure, with_SCS(100_000, 50))
 
-        if certified_λ < 0.0 && λ > 0.01 # there is still a chance to detect spectral gap
-            new_λ = round(0.8λ, sigdigits=2)
+        if spectral_gap < 0.0 && λ > 0.01 # there is still a chance to detect spectral gap
+            new_λ = round(0.8λ, sigdigits=3)
             new_dir = joinpath(group_name, "$new_λ")
             isdir(new_dir) || mkpath(new_dir)
             cp(joinpath(group_name, "Inf", "warmstart.jld"), joinpath(new_dir, "warmstart.jld"), force=true)

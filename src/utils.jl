@@ -38,6 +38,7 @@ function check_propertyT(sett::PropertyT.Settings)
 
     S = gens(RG.group)
     S = unique!([S; inv.(S)])
+    @assert length(S) == 6
 
     Δ = RG(length(S)) - sum(RG(s) for s in S) # small Laplacian
     @info "Checking the positivity of" Δ
@@ -61,7 +62,7 @@ function check_propertyT(sett::PropertyT.Settings)
 
     PropertyT.interpret_results(sett, certified_λ/100)
 
-    return certified_λ/100, λ/100
+    return certified_λ/100, λ
 end
 
 function load_basis!(RG::GroupRing, sett::PropertyT.Settings)
