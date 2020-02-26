@@ -25,10 +25,10 @@ include(joinpath("src", "utils.jl"))
 const HALFRADIUS = 1
 using SCS
 
-with_SCS(iters=30_000, acceleration=10) = with_optimizer(SCS.Optimizer,
+with_SCS(iters=30_000, acceleration=10; eps=1e-10) = with_optimizer(SCS.Optimizer,
     linear_solver=SCS.Direct,
     max_iters=iters,
-    eps=1e-9,
+    eps=eps,
     alpha=(acceleration == 0 ? 1.95 : 1.5),
     acceleration_lookback=acceleration,
     warm_start=true)
