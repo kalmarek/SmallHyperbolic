@@ -58,9 +58,9 @@ function check_propertyT(sett::PropertyT.Settings)
 
     save(PropertyT.filename(sett, :solution), "λ", λ, "P", P, "Q", Q)
 
-    certified_λ = PropertyT.certify_SOS_decomposition(ELT, Δ, λ, Q, R=sett.halfradius)
+    certified_λ = PropertyT.certify_SOS_decomposition(ELT, Δ, λ, Q, R=10)
 
-    PropertyT.interpret_results(sett, certified_λ/100)
+    PropertyT.interpret_results(sett.name, certified_λ/100, length(S))
 
     return certified_λ/100, λ
 end
