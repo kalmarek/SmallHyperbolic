@@ -33,6 +33,7 @@ with_SCS(iters=30_000, acceleration=10; eps=1e-10) = with_optimizer(SCS.Optimize
     acceleration_lookback=acceleration,
     warm_start=true)
 
+groups244 = parse_grouppresentations("data/presentations_2_4_4.txt")
 groups333 = parse_grouppresentations("data/presentations_3_3_3.txt")
 groups334 = parse_grouppresentations("data/presentations_3_3_4.txt")
 groups344 = parse_grouppresentations("data/presentations_3_4_4.txt")
@@ -40,7 +41,7 @@ groups444 = parse_grouppresentations("data/presentations_4_4_4.txt")
 groups555 = parse_grouppresentations("data/presentations_5_5_5.txt")
 
 
-groups = merge(groups333, groups334, groups344, groups444, groups555)
+groups = merge(groups244, groups333, groups334, groups344, groups444, groups555)
 
 @assert length(ARGS) == 1
 
