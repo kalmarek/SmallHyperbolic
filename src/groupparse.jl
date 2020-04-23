@@ -34,13 +34,17 @@ function parse_magma_fpgroup(str::AbstractString)
 end
 
 function parse_magma_fpgroup(gens_str::AbstractVector{<:AbstractString}, rels_str::AbstractVector{<:AbstractString})
-    rels_expr = Meta.parse.(rels_str)
-    expr = :([$(rels_expr...)])
+
+    gens_arr = Symbol.(gens_str)
+    gens_expr = Expr(:tuple, gens_arr...)
+
+    rels_arr = Meta.parse.(rels_str)
+    rels_expr = :([$(rels_arr...)])
 
     F = FreeGroup(String.(gens_str))
     relations = @eval begin
-        a,b,c = AbstractAlgebra.gens($F)
-        $expr
+        $gens_expr = AbstractAlgebra.gens($F);
+        $rels_expr
     end
 
     return F/relations
