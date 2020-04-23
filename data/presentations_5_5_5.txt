@@ -20,3 +20,11 @@ H_6:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a
 H_7:=Group<a, b, c |a^5, b^5, c^5, comm(a, b, a), comm(a, b, b), b^-1 * c * b * c^-1 * b * c, c^-2 * b * c * b * c^-2 * b^2, comm(a,c,a), comm(a,c,c,a), comm(a,c,c,c)>;
 //H_8
 H_8:=Group<a, b, c |a^5, b^5, c^5, a^-1 * b * a * b^-1 * a * b, b^-2 * a * b * a * b^-2 * a^2, b^-1 * c * b * c^-1 * b * c, c^-2 * b * c * b * c^-2 * b^2, comm(a,c,a), comm(a,c,c,a), comm(a,c,c,c)>;
+//
+// Group with <a, b> ≅ PSL₂(109), <b, c> ≅ Heisenberg(F₅)
+//
+Hyp1:=Group<a, b, c | a^5, b^5, c^5, comm(a, c), b^-1 * c^-1 * b * c * b * c^-1 * b^-1 * c, b * c^-2 * b * c * b^-2 * c, a * b * a * b^-1 * a^-1 * b * a * b * a^-1 * b^-1 * a^-1 * b * a * b^-1* a^-1 * b^-1, b * a * b * a * b^2 * a^-1 * b * a^2 * b^-2 * a^-1 * b * a^-1 * b^-1 * a^2, b * a^-1 * b * a * b^-1 * a * b^2 * a^-1 * b * a * b^-1 * a * b * a^-1 * b^-1 * a^2, b * a * b^-1 * a * b * a^-1 * b * a^-2 * b^-1 * a^-1 * b * a^-1 * b^-1 * a * b^-1 * a^2, b * a^-1 * b * a^-1 * b^-2 * a * b^-1 * a^-1 * b^-1 * a^-1 * b * a^-2 * b^-2 * a^2, a * b * a^-2 * b^-1 * a^-1 * b^-1 * a^-1 * b^-2 * a * b^-1 * a^-2 * b^2 * a * b^-1, b * a^-2 * b^-1 * a^-2 * b * a * b^-1 * a * b^-1 * a^2 * b^-1 * a * b * a^-2 * b>;
+//
+// Group with <a, b> ≅ PSL₂(109), <b, c> ≅ SL₂(5)
+//
+Hyp2:=Group<a, b, c | a^5, b^5, c^5, comm(a, c), b * c^-1 * b * c * b^-1 * c, b^2 * c^-1 * b^-1 * c^-1 * b^2 * c^-2, a * b * a * b^-1 * a^-1 * b * a * b * a^-1 * b^-1 * a^-1 * b * a * b^-1 * a^-1 * b^-1, b * a * b * a * b^2 * a^-1 * b * a^2 * b^-2 * a^-1 * b * a^-1 * b^-1 * a^2, b * a^-1 * b * a * b^-1 * a * b^2 * a^-1 * b * a * b^-1 * a * b * a^-1 * b^-1 * a^2, b * a * b^-1 * a * b * a^-1 * b * a^-2 * b^-1 * a^-1 * b * a^-1 * b^-1 * a * b^-1 * a^2, b * a^-1 * b * a^-1 * b^-2 * a * b^-1 * a^-1 * b^-1 * a^-1 * b * a^-2 * b^-2 * a^2, a * b * a^-2 * b^-1 * a^-1 * b^-1 * a^-1 * b^-2 * a * b^-1 * a^-2 * b^2 * a * b^-1, b * a^-2 * b^-1 * a^-2 * b * a * b^-1 * a * b^-1 * a^2 * b^-1 * a * b * a^-2 * b>;
