@@ -31,4 +31,4 @@ groups555: $(GROUPS555)
 $(GROUPS244) $(GROUPS333) $(GROUPS334) $(GROUPS344) $(GROUPS444) $(GROUPS555):
 	@echo "Checking property (T) for" $@
 	@mkdir -p log
-	$(JULIA) --project=. runcomputations.jl $@ &>> log/$@.log
+	$(JULIA) --project=. runcomputations.jl $@
