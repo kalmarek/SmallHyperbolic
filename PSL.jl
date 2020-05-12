@@ -21,8 +21,8 @@ function parse_evalzz(arg, expr_str)
     end
 end
 
-function load_discrete_repr(i, q=109; CC=AcbField(128))
-    ζ = root_of_unity(CC, (q+1)÷2)
+function load_discrete_repr(i, q=109; CC=AcbField(512))
+    ζ = root_of_unity(CC, (q-1)÷2)
 	degree = q-1
 
 	ra = readdlm("data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_a.txt", ',', String)
@@ -35,8 +35,8 @@ function load_discrete_repr(i, q=109; CC=AcbField(128))
 end
 
 
-function load_principal_repr(i, q=109; CC=AcbField(128))
-    ζ = root_of_unity(CC, (q+1)÷2)
+function load_principal_repr(i, q=109; CC=AcbField(512))
+    ζ = root_of_unity(CC, (q-1)÷2)
 	degree = q+1
 
 	ra = readdlm("data/Principal reps PSL(2, $q)/principal_rep_$(i)_a.txt", ',', String)
@@ -48,29 +48,34 @@ function load_principal_repr(i, q=109; CC=AcbField(128))
     return a,b
 end
 
-# for i in 0:27
-# 	try
-# 		a,b = load_principal_repr(i)
-# 		adjacency = sum([[a^i for i in 1:4]; [b^i for i in 1:4]])
-# 		M = parent(adjacency)
-#
-# 		# X = M(rand(base_ring, size(adjacency)))
-#
-# 		# @time ev = eigvals(X*adjacency*inv(X))
-# 		@time evc = eigvals(adjacency)
-# 		ev = sort(real.(first.(evc)), lt=<, rev=true)
-# 		@info "Principal Series Representation $i" ev[1:4]
-# 	catch ex
-# 		@error "Principal Series Representation $i : failed"
-# 		ex isa InterruptException && throw(ex)
-# 	end
-# end
+for i in 0:27
+	try
+		a,b = load_principal_repr(i)
+		adjacency = sum([[a^i for i in 1:4]; [b^i for i in 1:4]])
+		# @time evc = eigvals(adjacency)
+
+		CC = base_ring(adjacency)
+		X = matrix(CC, rand(CC, size(adjacency)))
+		@time evc = eigvals(X*adjacency*inv(X))
+
+		ev = sort(real.(first.(evc)), lt=<, rev=true)
+		@info "Principal Series Representation $i" ev[1:4]
+	catch ex
+		@error "Principal Series Representation $i failed"
+		ex isa InterruptException && throw(ex)
+	end
+end
 
 for i in 1:27
 	try
 		a,b = load_discrete_repr(i)
 		adjacency = sum([[a^i for i in 1:4]; [b^i for i in 1:4]])
-		@time evc = eigvals(adjacency)
+		# @time evc = eigvals(adjacency)
+
+		CC = base_ring(adjacency)
+		X = matrix(CC, rand(CC, size(adjacency)))
+		@time evc = eigvals(X*adjacency*inv(X))
+
 		ev = sort(real.(first.(evc)), lt=<, rev=true)
 		@info "Discrete Series Representation $i" ev[1:4]
 	catch ex
