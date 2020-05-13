@@ -4,6 +4,8 @@ using DelimitedFiles
 include("src/nemo_utils.jl")
 
 
+const PRECISION = 256
+
 function parse_eval(arg, expr_str, var)
     ex = Meta.parse(expr_str)
 	svar = :($var)
@@ -14,7 +16,7 @@ function parse_eval(arg, expr_str, var)
     end
 end
 
-function load_discrete_repr(i, q=109; CC=AcbField(512))
+function load_discrete_repr(i, q = 109; CC = AcbField(PRECISION))
     ζ = root_of_unity(CC, (q - 1) ÷ 2)
     degree = q - 1
 
@@ -35,7 +37,7 @@ function load_discrete_repr(i, q=109; CC=AcbField(512))
     return a, b
 end
 
-function load_principal_repr(i, q=109; CC=AcbField(512))
+function load_principal_repr(i, q = 109; CC = AcbField(PRECISION))
     ζ = root_of_unity(CC, (q - 1) ÷ 2)
     degree = q + 1
 
