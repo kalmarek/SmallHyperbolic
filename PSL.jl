@@ -3,54 +3,65 @@ using DelimitedFiles
 
 include("src/nemo_utils.jl")
 
-function parse_evalZ(arg, expr_str)
-    ex = Meta.parse(expr_str)
-    return @eval begin
-        let Z=$arg
-	    $ex
-	end
-    end
-end
 
-function parse_evalzz(arg, expr_str)
+function parse_eval(arg, expr_str, var)
     ex = Meta.parse(expr_str)
+	svar = :($var)
     return @eval begin
-        let zz=$arg
-	    $ex
-	end
+        let $svar = $arg
+            $ex
+        end
     end
 end
 
 function load_discrete_repr(i, q=109; CC=AcbField(512))
-    ζ = root_of_unity(CC, (q-1)÷2)
-	degree = q-1
+    ζ = root_of_unity(CC, (q - 1) ÷ 2)
+    degree = q - 1
 
-	ra = readdlm("data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_a.txt", ',', String)
-	a = matrix(CC, [CC(parse_evalZ(ζ, s)) for s in ra[1:degree, 1:degree]])
+    ra = readdlm(
+        "data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_a.txt",
+        ',',
+        String,
+    )
+    a = matrix(CC, [CC(parse_eval(ζ, s, :Z)) for s in ra[1:degree, 1:degree]])
 
-	rb = readdlm("data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_b.txt", ',', String)
-    b = matrix(CC, [CC(parse_evalZ(ζ, s)) for s in rb[1:degree, 1:degree]])
+    rb = readdlm(
+        "data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_b.txt",
+        ',',
+        String,
+    )
+    b = matrix(CC, [CC(parse_eval(ζ, s, :Z)) for s in rb[1:degree, 1:degree]])
 
-    return a,b
+    return a, b
 end
 
 function load_principal_repr(i, q=109; CC=AcbField(512))
-    ζ = root_of_unity(CC, (q-1)÷2)
-	degree = q+1
+    ζ = root_of_unity(CC, (q - 1) ÷ 2)
+    degree = q + 1
 
-	ra = readdlm("data/Principal reps PSL(2, $q)/principal_rep_$(i)_a.txt", ',', String)
-    a = matrix(CC, [CC(parse_evalzz(ζ, s)) for s in ra[1:degree, 1:degree]])
+    ra = readdlm(
+        "data/Principal reps PSL(2, $q)/principal_rep_$(i)_a.txt",
+        ',',
+        String,
+    )
+    a = matrix(CC, [CC(parse_eval(ζ, s, :zz)) for s in ra[1:degree, 1:degree]])
 
-	rb = readdlm("data/Principal reps PSL(2, $q)/principal_rep_$(i)_b.txt", ',', String)
-	b = matrix(CC, [CC(parse_evalzz(ζ, s)) for s in rb[1:degree, 1:degree]])
+    rb = readdlm(
+        "data/Principal reps PSL(2, $q)/principal_rep_$(i)_b.txt",
+        ',',
+        String,
+    )
+    b = matrix(CC, [CC(parse_eval(ζ, s, :zz)) for s in rb[1:degree, 1:degree]])
 
-    return a,b
+    return a, b
 end
 
+
+
 function safe_eigvals(m::acb_mat)
-	CC = base_ring(m)
-	X = matrix(CC, rand(CC, size(m)))
-	return eigvals(X*m*inv(X))
+    CC = base_ring(m)
+    X = matrix(CC, rand(CC, size(m)))
+    return eigvals(X * m * inv(X))
 end
 
 for i in 0:27
