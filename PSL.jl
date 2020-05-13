@@ -34,7 +34,6 @@ function load_discrete_repr(i, q=109; CC=AcbField(512))
     return a,b
 end
 
-
 function load_principal_repr(i, q=109; CC=AcbField(512))
     ζ = root_of_unity(CC, (q-1)÷2)
 	degree = q+1
@@ -48,18 +47,19 @@ function load_principal_repr(i, q=109; CC=AcbField(512))
     return a,b
 end
 
+function safe_eigvals(m::acb_mat)
+	CC = base_ring(m)
+	X = matrix(CC, rand(CC, size(m)))
+	return eigvals(X*m*inv(X))
+end
+
 for i in 0:27
 	try
 		a,b = load_principal_repr(i)
 		adjacency = sum([[a^i for i in 1:4]; [b^i for i in 1:4]])
-		# @time evc = eigvals(adjacency)
-
-		CC = base_ring(adjacency)
-		X = matrix(CC, rand(CC, size(adjacency)))
-		@time evc = eigvals(X*adjacency*inv(X))
-
+		@time evc = safe_eigvals(adjacency)
 		ev = sort(real.(first.(evc)), lt=<, rev=true)
-		@info "Principal Series Representation $i" ev[1:4]
+		@info "Principal Series Representation $i" ev[1:2]
 	catch ex
 		@error "Principal Series Representation $i failed"
 		ex isa InterruptException && throw(ex)
@@ -70,14 +70,9 @@ for i in 1:27
 	try
 		a,b = load_discrete_repr(i)
 		adjacency = sum([[a^i for i in 1:4]; [b^i for i in 1:4]])
-		# @time evc = eigvals(adjacency)
-
-		CC = base_ring(adjacency)
-		X = matrix(CC, rand(CC, size(adjacency)))
-		@time evc = eigvals(X*adjacency*inv(X))
-
+		@time evc = safe_eigvals(adjacency)
 		ev = sort(real.(first.(evc)), lt=<, rev=true)
-		@info "Discrete Series Representation $i" ev[1:4]
+		@info "Discrete Series Representation $i" ev[1:2]
 	catch ex
 		@error "Discrete Series Representation $i : failed"
 		ex isa InterruptException && rethrow(ex)
