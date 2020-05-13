@@ -83,7 +83,7 @@ for i in 1:27
 	try
 		a,b = load_discrete_repr(i)
 		adjacency = sum([[a^i for i in 1:4]; [b^i for i in 1:4]])
-		@time evc = safe_eigvals(adjacency)
+		@time evc = eigvals(adjacency)
 		ev = sort(real.(first.(evc)), lt=<, rev=true)
 		@info "Discrete Series Representation $i" ev[1:2]
 	catch ex
