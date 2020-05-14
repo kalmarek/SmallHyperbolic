@@ -78,3 +78,65 @@ function AcbVector(v::AbstractVector{Nemo.acb})
     return acb_v
 end
 
+function approx_eig_qr!(v::AcbVector, R::acb_mat, A::acb_mat)
+    n = nrows(A)
+    ccall(
+        (:acb_mat_approx_eig_qr, Nemo.libarb),
+        Cint,
+        (
+            Ptr{acb_struct},
+            Ptr{Cvoid},
+            Ref{acb_mat},
+            Ref{acb_mat},
+            Ptr{Cvoid},
+            Int,
+            Int,
+        ),
+        v,
+        C_NULL,
+        R,
+        A,
+        C_NULL,
+        0,
+        prec(parent(A)),
+    )
+    return v
+end
+
+function LinearAlgebra.eigvals(A::Nemo.acb_mat)
+    n = nrows(A)
+    λ_approx = AcbVector(n)
+    R_approx = similar(A)
+    v = approx_eig_qr!(λ_approx, R_approx, A)
+
+    λ = AcbVector(n)
+    b = ccall(
+        (:acb_mat_eig_multiple, Nemo.libarb),
+        Cint,
+        (Ptr{acb_struct}, Ref{acb_mat}, Ptr{acb_struct}, Ref{acb_mat}, Int),
+        λ,
+        A,
+        λ_approx,
+        R_approx,
+        prec(base_ring(A)),
+    )
+
+    CC = base_ring(A)
+    return CC.(λ)
+end
+
+function _count_multiplicites(evs)
+    λ_m = Vector{Tuple{acb,Int}}()
+    sizehint!(λ_m, length(evs))
+    i = 1
+    while i <= length(evs)
+        m = 0
+        v = evs[i]
+        while i + m <= length(evs) && isequal(evs[i], evs[i+m])
+            m += 1
+        end
+        push!(λ_m, (evs[i], m))
+        i += m
+    end
+    return λ_m
+end
