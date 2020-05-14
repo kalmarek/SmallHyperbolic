@@ -1,3 +1,5 @@
+Base.hash(a::acb, h::UInt) = h
+
 import Base.reim
 reim(x::Nemo.acb) = reim(convert(ComplexF64, x))
 
@@ -153,5 +155,5 @@ function _count_multiplicites(evs)
         push!(λ_m, (evs[i], m))
         i += m
     end
-    return λ_m
+    return sort(λ_m, lt=(a,b)->(real(first(a))<real(first(b))), rev=true)
 end
