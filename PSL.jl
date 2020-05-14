@@ -3,36 +3,37 @@ using DelimitedFiles
 
 include("src/nemo_utils.jl")
 
-
 const PRECISION = 256
 
-function parse_eval(arg, expr_str, var)
+function parse_eval(expr_str, value, var_name)
     ex = Meta.parse(expr_str)
-	svar = :($var)
+	svar = :($var_name)
     return @eval begin
-        let $svar = $arg
+        let $svar = $value
             $ex
         end
     end
 end
 
+function read_eval(fname, var_name, value)
+   a = readdlm(fname, ',', String)
+   a .= replace.(a, '/'=>"//")
+   return parse_eval.(a, value, var_name)
+end
+
 function load_discrete_repr(i, q = 109; CC = AcbField(PRECISION))
-    ζ = root_of_unity(CC, (q - 1) ÷ 2)
+    ζ = root_of_unity(CC, (q + 1) ÷ 2)
     degree = q - 1
 
-    ra = readdlm(
+    ra = read_eval(
         "data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_a.txt",
-        ',',
-        String,
-    )
-    a = matrix(CC, [CC(parse_eval(ζ, s, :Z)) for s in ra[1:degree, 1:degree]])
+        :Z, ζ)
+    a = matrix(CC, [CC(s) for s in ra[1:degree, 1:degree]])
 
-    rb = readdlm(
+    rb = read_eval(
         "data/Discrete reps PSL(2, $q)/discrete_rep_$(i)_b.txt",
-        ',',
-        String,
-    )
-    b = matrix(CC, [CC(parse_eval(ζ, s, :Z)) for s in rb[1:degree, 1:degree]])
+        :Z, ζ)
+    b = matrix(CC, [CC(s) for s in rb[1:degree, 1:degree]])
 
     return a, b
 end
@@ -41,19 +42,14 @@ function load_principal_repr(i, q = 109; CC = AcbField(PRECISION))
     ζ = root_of_unity(CC, (q - 1) ÷ 2)
     degree = q + 1
 
-    ra = readdlm(
+    ra = read_eval(
         "data/Principal reps PSL(2, $q)/principal_rep_$(i)_a.txt",
-        ',',
-        String,
-    )
-    a = matrix(CC, [CC(parse_eval(ζ, s, :zz)) for s in ra[1:degree, 1:degree]])
+        :zz, ζ)
+    a = matrix(CC, [CC(z) for z in ra[1:degree, 1:degree]])
 
-    rb = readdlm(
+    rb = read_eval(
         "data/Principal reps PSL(2, $q)/principal_rep_$(i)_b.txt",
-        ',',
-        String,
-    )
-    b = matrix(CC, [CC(parse_eval(ζ, s, :zz)) for s in rb[1:degree, 1:degree]])
+        :zz, ζ)
 
     return a, b
 end
