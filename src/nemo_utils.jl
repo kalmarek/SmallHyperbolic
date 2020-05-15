@@ -43,11 +43,13 @@ const libarb = Nemo.libarb
 mutable struct AcbVector <: AbstractVector{acb_struct}
     ptr::Ptr{acb_struct}
     length::Int
+    precision::Int
 
-    function AcbVector(n::Int)
+    function AcbVector(n::Integer, precision::Integer)
         v = new(
             ccall((:_acb_vec_init, libarb), Ptr{acb_struct}, (Clong,), n),
             n,
+            precision
         )
         finalizer(clear!, v)
         return v
@@ -56,6 +58,7 @@ end
 
 Base.cconvert(::Type{Ptr{acb_struct}}, acb_v::AcbVector) = acb_v.ptr
 Base.size(acb_v::AcbVector) = (acb_v.length,)
+Base.precision(acb_v::AcbVector) = acb_v.precision
 
 function clear!(acb_v::AcbVector)
     ccall(
@@ -67,22 +70,16 @@ function clear!(acb_v::AcbVector)
     )
 end
 
-function (C::AcbField)(z::acb_struct)
-    res = zero(C)
-    ccall((:acb_set, libarb), Cvoid, (Ref{acb}, Ref{acb_struct}), res, z)
-    return res
-end
-
-_get_ptr(acb_v::AcbVector, i::Int = 1) =
-    acb_v.ptr + (i - 1) * sizeof(acb_struct)
-
 Base.@propagate_inbounds function Base.getindex(acb_v::AcbVector, i::Integer)
     @boundscheck checkbounds(acb_v, i)
     return unsafe_load(acb_v.ptr, i)
 end
 
-function AcbVector(v::AbstractVector{Nemo.acb})
-    acb_v = AcbVector(length(v))
+_get_ptr(acb_v::AcbVector, i::Int = 1) =
+    acb_v.ptr + (i - 1) * sizeof(acb_struct)
+
+function AcbVector(v::AbstractVector{Nemo.acb}, p = prec(parent(first(v))))
+    acb_v = AcbVector(length(v), p)
     for (i, val) in zip(eachindex(acb_v), v)
         ccall(
             (:acb_set, libarb),
@@ -96,7 +93,6 @@ function AcbVector(v::AbstractVector{Nemo.acb})
 end
 
 function approx_eig_qr!(v::AcbVector, R::acb_mat, A::acb_mat)
-    n = nrows(A)
     ccall(
         (:acb_mat_approx_eig_qr, Nemo.libarb),
         Cint,
@@ -120,13 +116,21 @@ function approx_eig_qr!(v::AcbVector, R::acb_mat, A::acb_mat)
     return v
 end
 
+function (C::AcbField)(z::acb_struct)
+    res = zero(C)
+    ccall((:acb_set, libarb), Cvoid, (Ref{acb}, Ref{acb_struct}), res, z)
+    return res
+end
+
 function LinearAlgebra.eigvals(A::Nemo.acb_mat)
     n = nrows(A)
-    λ_approx = AcbVector(n)
+    CC = base_ring(A)
+    p = prec(CC)
+    λ_approx = AcbVector(n, p)
     R_approx = similar(A)
     v = approx_eig_qr!(λ_approx, R_approx, A)
 
-    λ = AcbVector(n)
+    λ = AcbVector(n, p)
     b = ccall(
         (:acb_mat_eig_multiple, Nemo.libarb),
         Cint,
@@ -135,10 +139,9 @@ function LinearAlgebra.eigvals(A::Nemo.acb_mat)
         A,
         λ_approx,
         R_approx,
-        prec(base_ring(A)),
+        p,
     )
 
-    CC = base_ring(A)
     return CC.(λ)
 end
 
