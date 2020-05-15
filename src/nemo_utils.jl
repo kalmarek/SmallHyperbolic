@@ -1,13 +1,13 @@
-Base.hash(a::acb, h::UInt) = h
+const libarb = Nemo.libarb
 
-import Base.reim
-reim(x::Nemo.acb) = reim(convert(ComplexF64, x))
+Base.hash(a::acb, h::UInt) = h
+Base.reim(x::acb) = reim(convert(ComplexF64, x))
 
 function root_of_unity(CC::AcbField, p, k = 1)
     @assert p > 0
     res = zero(CC)
     ccall(
-        (:acb_unit_root, Nemo.libarb),
+        (:acb_unit_root, libarb),
         Cvoid,
         (Ref{acb}, Culong, Clong),
         res,
@@ -21,7 +21,7 @@ import Base.adjoint
 function Base.adjoint(m::acb_mat)
     res = zero(m)
     ccall(
-        (:acb_mat_conjugate_transpose, Nemo.libarb),
+        (:acb_mat_conjugate_transpose, libarb),
         Cvoid,
         (Ref{acb_mat}, Ref{acb_mat}),
         res,
@@ -38,7 +38,6 @@ rand(rng::AbstractRNG, rs::Random.SamplerTrivial{AcbField}) =
 
 
 import Nemo.acb_struct
-const libarb = Nemo.libarb
 
 mutable struct AcbVector <: AbstractVector{acb_struct}
     ptr::Ptr{acb_struct}
@@ -49,7 +48,7 @@ mutable struct AcbVector <: AbstractVector{acb_struct}
         v = new(
             ccall((:_acb_vec_init, libarb), Ptr{acb_struct}, (Clong,), n),
             n,
-            precision
+            precision,
         )
         finalizer(clear!, v)
         return v
@@ -78,13 +77,13 @@ end
 _get_ptr(acb_v::AcbVector, i::Int = 1) =
     acb_v.ptr + (i - 1) * sizeof(acb_struct)
 
-function AcbVector(v::AbstractVector{Nemo.acb}, p = prec(parent(first(v))))
+function AcbVector(v::AbstractVector{acb}, p = prec(parent(first(v))))
     acb_v = AcbVector(length(v), p)
     for (i, val) in zip(eachindex(acb_v), v)
         ccall(
             (:acb_set, libarb),
             Cvoid,
-            (Ptr{acb_struct}, Ref{Nemo.acb}),
+            (Ptr{acb_struct}, Ref{acb}),
             _get_ptr(acb_v, i),
             val,
         )
@@ -94,7 +93,7 @@ end
 
 function approx_eig_qr!(v::AcbVector, R::acb_mat, A::acb_mat)
     ccall(
-        (:acb_mat_approx_eig_qr, Nemo.libarb),
+        (:acb_mat_approx_eig_qr, libarb),
         Cint,
         (
             Ptr{acb_struct},
@@ -122,7 +121,7 @@ function (C::AcbField)(z::acb_struct)
     return res
 end
 
-function LinearAlgebra.eigvals(A::Nemo.acb_mat)
+function LinearAlgebra.eigvals(A::acb_mat)
     n = nrows(A)
     CC = base_ring(A)
     p = prec(CC)
@@ -132,7 +131,7 @@ function LinearAlgebra.eigvals(A::Nemo.acb_mat)
 
     λ = AcbVector(n, p)
     b = ccall(
-        (:acb_mat_eig_multiple, Nemo.libarb),
+        (:acb_mat_eig_multiple, libarb),
         Cint,
         (Ptr{acb_struct}, Ref{acb_mat}, Ptr{acb_struct}, Ref{acb_mat}, Int),
         λ,
@@ -158,5 +157,9 @@ function _count_multiplicites(evs)
         push!(λ_m, (evs[i], m))
         i += m
     end
-    return sort(λ_m, lt=(a,b)->(real(first(a))<real(first(b))), rev=true)
+    return sort(
+        λ_m,
+        lt = (a, b) -> (real(first(a)) < real(first(b))),
+        rev = true,
+    )
 end
