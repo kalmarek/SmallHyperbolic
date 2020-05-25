@@ -79,6 +79,7 @@ function safe_eigvals(m::acb_mat)
 end
 
 if !isinteractive()
+
     for i = 0:27
         try
             a, b = load_principal_repr(i)
