@@ -163,3 +163,14 @@ function _count_multiplicites(evs)
         rev = true,
     )
 end
+
+function safe_eigvals(m::acb_mat)
+    evs = eigvals(m)
+    all(isfinite.(evs)) && return evs
+    CC = base_ring(m)
+    X = matrix(CC, rand(CC, size(m)))
+    evs = eigvals(X * m * inv(X))
+    return evs
+    all(isfinite.(evs)) && return evs
+    throw(ArgumentError("Could not compute eigenvalues"))
+end

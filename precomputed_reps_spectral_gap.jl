@@ -68,16 +68,6 @@ function load_principal_repr(i, q = 109; CC = AcbField(PRECISION))
     return a, b
 end
 
-function safe_eigvals(m::acb_mat)
-    evs = eigvals(m)
-    all(isfinite.(evs)) && return evs
-    CC = base_ring(m)
-    X = matrix(CC, rand(CC, size(m)))
-    evs = eigvals(X * m * inv(X))
-    all(isfinite.(evs)) && return evs
-    throw(ArgumentError("Could not compute eigenvalues"))
-end
-
 if !isinteractive()
 
     for i = 0:27
