@@ -356,7 +356,7 @@ uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[RamanujanGraphs]]
 deps = ["LightGraphs", "LinearAlgebra", "Primes"]
-git-tree-sha1 = "8d9d25a274aeec5d5265829d05784276a4841f6d"
+git-tree-sha1 = "f623b007eda4cd5857953ba6735f1d1395175bab"
 repo-rev = "master"
 repo-url = "https://github.com/kalmarek/RamanujanGraphs.jl"
 uuid = "e7bd6bc6-b6b8-11e9-1ec2-2f89442c0d6c"
