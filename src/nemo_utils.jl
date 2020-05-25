@@ -144,6 +144,29 @@ function LinearAlgebra.eigvals(A::acb_mat)
     return CC.(λ)
 end
 
+function eigvals_rump(A::acb_mat)
+    n = nrows(A)
+    CC = base_ring(A)
+    p = prec(CC)
+    λ_approx = AcbVector(n, p)
+    R_approx = similar(A)
+    v = approx_eig_qr!(λ_approx, R_approx, A)
+
+    λ = AcbVector(n, p)
+    b = ccall(
+        (:acb_mat_eig_multiple_rump, libarb),
+        Cint,
+        (Ptr{acb_struct}, Ref{acb_mat}, Ptr{acb_struct}, Ref{acb_mat}, Int),
+        λ,
+        A,
+        λ_approx,
+        R_approx,
+        p,
+    )
+
+    return CC.(λ)
+end
+
 function _count_multiplicites(evs)
     λ_m = Vector{Tuple{acb,Int}}()
     sizehint!(λ_m, length(evs))
@@ -165,11 +188,11 @@ function _count_multiplicites(evs)
 end
 
 function safe_eigvals(m::acb_mat)
-    evs = eigvals(m)
-    all(isfinite.(evs)) && return evs
+    # evs = eigvals_rump(m)
+    # all(isfinite.(evs)) && return evs
     CC = base_ring(m)
     X = matrix(CC, rand(CC, size(m)))
-    evs = eigvals(X * m * inv(X))
+    evs = eigvals_rump(X * m * inv(X))
     return evs
     all(isfinite.(evs)) && return evs
     throw(ArgumentError("Could not compute eigenvalues"))
