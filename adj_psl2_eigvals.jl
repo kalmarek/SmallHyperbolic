@@ -8,7 +8,8 @@ const p = try
     @assert length(ARGS) == 2 && ARGS[1] == "-p"
     p = parse(Int, ARGS[2])
     RamanujanGraphs.Primes.isprime(p)
-    @assert p % 4 == 1
+    # @assert p % 4 == 1
+    p
 catch ex
     @error "You need to provide a prime `-p` which is congruent to 1 mod 4."
     rethrow(ex)
