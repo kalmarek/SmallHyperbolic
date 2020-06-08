@@ -8,7 +8,6 @@ const p = try
     @assert length(ARGS) == 2 && ARGS[1] == "-p"
     p = parse(Int, ARGS[2])
     RamanujanGraphs.Primes.isprime(p)
-    # @assert p % 4 == 1
     p
 catch ex
     @error "You need to provide a prime `-p` which is congruent to 1 mod 4."
@@ -82,25 +81,35 @@ end
 
 let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0)),
     β = RamanujanGraphs.generator_min(QuadraticExt(α))
-    for j = 1:(p-1)÷4
+
+    if p % 4 == 1
+        ub = (p - 1) ÷ 4
+        ζ = root_of_unity(CC, (p + 1) ÷ 2, (p - 1) ÷ 4)
+    else # p % 4 == 3
+        ub = (p + 1) ÷ 4
+        ζ = root_of_unity(CC, (p + 1), 1)
+    end
+
+    for k = 1:ub
         try
             h = DiscreteRepr(
                 RamanujanGraphs.GF{p}(1) => root_of_unity(CC, p),
-                β => root_of_unity(CC, (p+1)÷2, j*(p-1)÷4))
+                β => ζ^k,
+            )
 
             @time adjacency = let
                 A = matrix(CC, h(SL2p[2]))
                 B = matrix(CC, h(SL2p[3]))
-                sum(A^i for i in 1:4) + sum(B^i for i in 1:4)
+                sum(A^i for i = 1:4) + sum(B^i for i = 1:4)
             end
 
             @time ev = let evs = safe_eigvals(adjacency)
                 _count_multiplicites(evs)
             end
 
-            @info "Discrete Series Representation $j" ev[1:2] ev[end]
+            @info "Discrete Series Representation $k" ev[1:2] ev[end]
         catch ex
-            @error "Discrete Series Representation $j : failed" ex
+            @error "Discrete Series Representation $k : failed" ex
             ex isa InterruptException && rethrow(ex)
         end
     end
