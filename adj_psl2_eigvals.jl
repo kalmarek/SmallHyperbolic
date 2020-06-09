@@ -2,21 +2,12 @@ using RamanujanGraphs
 using LinearAlgebra
 using Nemo
 
+using Logging
+using Dates
+
 include("src/nemo_utils.jl")
 
-const p = try
-    @assert length(ARGS) == 2 && ARGS[1] == "-p"
-    p = parse(Int, ARGS[2])
-    RamanujanGraphs.Primes.isprime(p)
-    p
-catch ex
-    @error "You need to provide a prime `-p` which is congruent to 1 mod 4."
-    rethrow(ex)
-end
-
-const CC = AcbField(256)
-
-SL2p = let
+function SL2p_gens(p)
     if p == 109
         a, b = let
             a = SL₂{p}([0 1; 108 11])
@@ -44,77 +35,99 @@ SL2p = let
         end
     end
 
-    E, sizes =
-        RamanujanGraphs.generate_balls([a, b, inv(a), inv(b)], radius = 21)
-    @assert sizes[end] == RamanujanGraphs.order(SL₂{p})
-    E
+    return a,b
 end
 
-let Borel_cosets = Bcosets = RamanujanGraphs.CosetDecomposition(SL2p, Borel(SL₂{p})),
-    α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0))
+function adjacency(ϱ, CC, a, b)
+    A = matrix(CC, ϱ(a))
+    B = matrix(CC, ϱ(b))
 
-    for j in 0:(p-1)÷4
-        try
-            h = PrincipalRepr(
-                α => root_of_unity(CC, (p-1)÷2, j),
-                Borel_cosets)
+    return sum(A^i for i = 1:4) + sum(B^i for i = 1:4)
+end
 
-            @time adjacency = let
-                A = matrix(CC, h(SL2p[2]))
-                B = matrix(CC, h(SL2p[3]))
-                sum(A^i for i in 1:4) + sum(B^i for i in 1:4)
-            end
+const p = try
+    @assert length(ARGS) == 2 && ARGS[1] == "-p"
+    p = parse(Int, ARGS[2])
+    RamanujanGraphs.Primes.isprime(p)
+    p
+catch ex
+    @error "You need to provide a prime `-p` which is congruent to 1 mod 4."
+    rethrow(ex)
+end
 
-            @time ev = let evs = safe_eigvals(adjacency)
-                _count_multiplicites(evs)
-            end
-            if length(ev) == 1
-                @info "Principal Series Representation $j" ev[1]
-            else
-                @info "Principal Series Representation $j" ev[1:2] ev[end]
-            end
-        catch ex
-            @error "Principal Series Representation $j failed" ex
-            ex isa InterruptException && rethrow(ex)
+const LOGFILE = "SL(2,$p)_eigvals_$(now()).log"
+
+open(joinpath("log", LOGFILE), "w") do io
+    with_logger(SimpleLogger(io)) do
+
+        CC = AcbField(128)
+
+        a,b = SL2p_gens(p)
+
+        Borel_cosets = let p = p, (a,b) = (a,b)
+            SL2p, sizes =
+                RamanujanGraphs.generate_balls([a, b, inv(a), inv(b)], radius = 21)
+            @assert sizes[end] == RamanujanGraphs.order(SL₂{p})
+            RamanujanGraphs.CosetDecomposition(SL2p, Borel(SL₂{p}))
         end
-    end
-end
 
-let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0)),
-    β = RamanujanGraphs.generator_min(QuadraticExt(α))
+        let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0))
 
-    if p % 4 == 1
-        ub = (p - 1) ÷ 4
-        ζ = root_of_unity(CC, (p + 1) ÷ 2, (p - 1) ÷ 4)
-    else # p % 4 == 3
-        ub = (p + 1) ÷ 4
-        ζ = root_of_unity(CC, (p + 1), 1)
-    end
+            for j = 0:(p-1)÷4
+                h = PrincipalRepr(
+                    α => root_of_unity(CC, (p - 1) ÷ 2, j),
+                    Borel_cosets,
+                )
 
-    for k = 1:ub
-        try
-            h = DiscreteRepr(
-                RamanujanGraphs.GF{p}(1) => root_of_unity(CC, p),
-                β => ζ^k,
-            )
+                @time adj = adjacency(h, CC, a, b)
 
-            @time adjacency = let
-                A = matrix(CC, h(SL2p[2]))
-                B = matrix(CC, h(SL2p[3]))
-                sum(A^i for i = 1:4) + sum(B^i for i = 1:4)
+                try
+                    @time ev = let evs = safe_eigvals(adj)
+                        _count_multiplicites(evs)
+                    end
+
+                    @info "Principal Series Representation $j" ev[1:2] ev[end]
+                catch ex
+                    @error "Principal Series Representation $j failed" ex
+                    ex isa InterruptException && rethrow(ex)
+                end
             end
-
-            @time ev = let evs = safe_eigvals(adjacency)
-                _count_multiplicites(evs)
-            end
-
-            @info "Discrete Series Representation $k" ev[1:2] ev[end]
-        catch ex
-            @error "Discrete Series Representation $k : failed" ex
-            ex isa InterruptException && rethrow(ex)
         end
-    end
-end
+
+        let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0)),
+            β = RamanujanGraphs.generator_min(QuadraticExt(α))
+
+            if p % 4 == 1
+                ub = (p - 1) ÷ 4
+                ζ = root_of_unity(CC, (p + 1) ÷ 2, 1)
+            else # p % 4 == 3
+                ub = (p + 1) ÷ 4
+                ζ = root_of_unity(CC, (p + 1), 1)
+            end
+
+            for k = 1:ub
+
+                h = DiscreteRepr(
+                    RamanujanGraphs.GF{p}(1) => root_of_unity(CC, p),
+                    β => ζ^k,
+                )
+
+                @time adj = adjacency(h, CC, a, b)
+
+                try
+                    @time ev = let evs = safe_eigvals(adj)
+                        _count_multiplicites(evs)
+                    end
+
+                    @info "Discrete Series Representation $k" ev[1:2] ev[end]
+                catch ex
+                    @error "Discrete Series Representation $k : failed" ex
+                    ex isa InterruptException && rethrow(ex)
+                end
+            end
+        end
+    end # with_logger
+end # open(logfile)
 
 #
 # using RamanujanGraphs.LightGraphs
