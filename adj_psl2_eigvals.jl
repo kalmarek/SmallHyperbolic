@@ -18,16 +18,16 @@ const CC = AcbField(256)
 
 SL2p = let
     if p == 109
-        a,b = let
-            a = SL₂{p}([  0  1; 108 11])
-            b = SL₂{p}([57  2;   52 42])
+        a, b = let
+            a = SL₂{p}([0 1; 108 11])
+            b = SL₂{p}([57 2; 52 42])
             @assert isone(a^10)
             @assert isone(b^10)
 
             a, b
         end
     elseif p == 131
-        a,b = let
+        a, b = let
             a = SL₂{p}([-58 -24; -58 46])
             b = SL₂{p}([0 -3; 44 -12])
             @assert isone(a^10)
@@ -37,14 +37,15 @@ SL2p = let
         end
     else
         @warn "no special set of generators for prime $p"
-        a,b = let
+        a, b = let
             a = SL₂{p}(1, 0, 1, 1)
             b = SL₂{p}(1, 1, 0, 1)
             a, b
         end
     end
 
-    E, sizes = RamanujanGraphs.generate_balls([a,b, inv(a), inv(b)], radius=21);
+    E, sizes =
+        RamanujanGraphs.generate_balls([a, b, inv(a), inv(b)], radius = 21)
     @assert sizes[end] == RamanujanGraphs.order(SL₂{p})
     E
 end
@@ -115,21 +116,40 @@ let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0)),
     end
 end
 
-
+#
 # using RamanujanGraphs.LightGraphs
 # using Arpack
 #
-# Γ, eigenvalues = let q = 109
-#     a = RamanujanGraphs.PSL₂{q}([  0  1
-#     108 11])
-#     b = RamanujanGraphs.PSL₂{q}([57  2
-#     52 42])
+# Γ, eigenvalues = let p = 109,
+#     a = PSL₂{p}([  0  1; 108  11]),
+#     b = PSL₂{p}([ 57  2;  52  42])
 #
 #     S = unique([[a^i for i in 1:4]; [b^i for i in 1:4]])
 #
 #     @info "Generating set S of $(eltype(S))" S
-#     @time Γ, verts, vlabels, elabels = RamanujanGraphs.cayley_graph((q^3 - q)÷2, S)
+#     @time Γ, verts, vlabels, elabels =
+#         RamanujanGraphs.cayley_graph(RamanujanGraphs.order(PSL₂{p}), S)
+#
 #     @assert all(LightGraphs.degree(Γ,i) == length(S) for i in vertices(Γ))
+#     @assert LightGraphs.nv(Γ) == RamanujanGraphs.order(PSL₂{p})
+#     A = adjacency_matrix(Γ)
+#     @time eigenvalues, _ = eigs(A, nev=5)
+#     @show Γ eigenvalues
+#     Γ, eigenvalues
+# end
+#
+# let p = 131,
+#     a = PSL₂{p}([-58 -24; -58 46]),
+#     b = PSL₂{p}([0 -3; 44 -12])
+#
+#     S = unique([[a^i for i in 1:4]; [b^i for i in 1:4]])
+#
+#     @info "Generating set S of $(eltype(S))" S
+#     @time Γ, verts, vlabels, elabels =
+#         RamanujanGraphs.cayley_graph(RamanujanGraphs.order(PSL₂{p}), S)
+#
+#     @assert all(LightGraphs.degree(Γ,i) == length(S) for i in vertices(Γ))
+#     @assert LightGraphs.nv(Γ) == RamanujanGraphs.order(PSL₂{p})
 #     A = adjacency_matrix(Γ)
 #     @time eigenvalues, _ = eigs(A, nev=5)
 #     @show Γ eigenvalues
