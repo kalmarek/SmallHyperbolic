@@ -8,7 +8,16 @@ using Dates
 include("src/nemo_utils.jl")
 
 function SL2p_gens(p)
-    if p == 109
+    if p == 31
+        a, b = let
+            a = SL₂{p}([8 14; 4 11])
+            b = SL₂{p}([23 0; 14 27])
+            @assert isone(a^10)
+            @assert isone(b^10)
+
+            a, b
+        end
+    elseif p == 109
         a, b = let
             a = SL₂{p}([0 1; 108 11])
             b = SL₂{p}([57 2; 52 42])
@@ -51,7 +60,7 @@ const p = try
     RamanujanGraphs.Primes.isprime(p)
     p
 catch ex
-    @error "You need to provide a prime `-p` which is congruent to 1 mod 4."
+    @error "You need to provide a prime, ex: `julia adj_psl2_eigvals.jl -p 31`"
     rethrow(ex)
 end
 
