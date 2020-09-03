@@ -117,8 +117,7 @@ open(joinpath("log", LOGFILE), "w") do io
         a,b = SL2p_gens(p)
         a = SL₂{p}(get(parsed_args, "a", a))
         b = SL₂{p}(get(parsed_args, "b", b))
-        @info "a = " a
-        @info "b = " b
+        @info a b
 
         Borel_cosets = let p = p, (a,b) = (a,b)
             SL2p, sizes =
