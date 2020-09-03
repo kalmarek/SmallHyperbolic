@@ -56,6 +56,7 @@ function adjacency(ϱ, CC, a, b)
 end
 
 function parse_our_args()
+    print(ARGS)
     s = ArgParseSettings()
     @add_arg_table s begin
         "-p"
@@ -66,16 +67,23 @@ function parse_our_args()
             help = "generator a (optional)"
         "-b"
             help = "generator b (optional)"
+        "--ab"
+            help = "array of generators a and b (optional)"
     end
 
     result = parse_args(s)
-    for key in ["a", "b"]
+    for key in ["a", "b", "ab"]
         val = get(result, key, "")
         if val != nothing
             result[key] = eval(Meta.parse(val))
         else
             delete!(result, key)
         end
+    end
+    val = get(result, "ab", "")
+    if val != ""
+        result["a"] = val[1]
+        result["b"] = val[2]
     end
     result
 end
@@ -101,7 +109,8 @@ open(joinpath("log", LOGFILE), "w") do io
         a,b = SL2p_gens(p)
         a = SL₂{p}(get(parsed_args, "a", a))
         b = SL₂{p}(get(parsed_args, "b", b))
-        print(a, " ", b)
+        @info "a = " a
+        @info "b = " b
 
         Borel_cosets = let p = p, (a,b) = (a,b)
             SL2p, sizes =
