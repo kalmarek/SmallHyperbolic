@@ -17,6 +17,24 @@ function SL2p_gens(p)
 
             a, b
         end
+    elseif p == 41
+        a, b = let
+            a = SL₂{p}([19 26; 29 16])
+            b = SL₂{p}([0 20; 2 6])
+            @assert isone(a^10)
+            @assert isone(b^10)
+
+            a, b
+        end
+    elseif p == 59
+        a, b = let
+            a = SL₂{p}([32 12; 20 2])
+            b = SL₂{p}([14 18; 45 20])
+            @assert isone(a^10)
+            @assert isone(b^10)
+
+            a, b
+        end
     elseif p == 109
         a, b = let
             a = SL₂{p}([0 1; 108 11])
@@ -80,6 +98,8 @@ open(joinpath("log", LOGFILE), "w") do io
             RamanujanGraphs.CosetDecomposition(SL2p, Borel(SL₂{p}))
         end
 
+        all_large_ev = []
+
         let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0))
 
             for j = 0:(p-1)÷4
@@ -96,6 +116,7 @@ open(joinpath("log", LOGFILE), "w") do io
                     end
 
                     @info "Principal Series Representation $j" ev[1:2] ev[end]
+                    all_large_ev = vcat(all_large_ev, ev[1:2])
                 catch ex
                     @error "Principal Series Representation $j failed" ex
                     ex isa InterruptException && rethrow(ex)
@@ -129,11 +150,16 @@ open(joinpath("log", LOGFILE), "w") do io
                     end
 
                     @info "Discrete Series Representation $k" ev[1:2] ev[end]
+                    all_large_ev = vcat(all_large_ev, ev[1:2])
                 catch ex
                     @error "Discrete Series Representation $k : failed" ex
                     ex isa InterruptException && rethrow(ex)
                 end
             end
+            print(all_large_ev)
+#            all_large_ev = sort(all_large_ev, rev=true)
+#            lambda = all_large_ev[2]
+#            print(lambda, " ", (lambda - 3)/5, " ", acos((lambda-3)/5), " ", acos((lambda-3)/5)/pi*180)
         end
     end # with_logger
 end # open(logfile)
