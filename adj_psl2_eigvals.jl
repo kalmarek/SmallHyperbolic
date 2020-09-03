@@ -18,6 +18,15 @@ function SL2p_gens(p)
 
             a, b
         end
+    elseif p == 41
+        a, b = let
+            a = SL₂{p}([0 28; 19 35])
+            b = SL₂{p}([38 27; 2 9])
+            @assert isone(a^10)
+            @assert isone(b^10)
+
+            a, b
+        end
     elseif p == 109
         a, b = let
             a = SL₂{p}([0 1; 108 11])
