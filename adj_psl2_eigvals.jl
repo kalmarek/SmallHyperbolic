@@ -1,6 +1,7 @@
 using RamanujanGraphs
 using LinearAlgebra
 using Nemo
+using ArgParse
 
 using Logging
 using Dates
@@ -54,9 +55,35 @@ function adjacency(ϱ, CC, a, b)
     return sum(A^i for i = 1:4) + sum(B^i for i = 1:4)
 end
 
+function parse_our_args()
+    s = ArgParseSettings()
+    @add_arg_table s begin
+        "-p"
+            help = "the prime p for which to use PSL(2,p)"
+            arg_type = Int
+            required = true
+        "-a"
+            help = "generator a (optional)"
+        "-b"
+            help = "generator b (optional)"
+    end
+
+    result = parse_args(s)
+    for key in ["a", "b"]
+        val = get(result, key, "")
+        if val != nothing
+            result[key] = eval(Meta.parse(val))
+        else
+            delete!(result, key)
+        end
+    end
+    result
+end
+
+parsed_args = parse_our_args()
+
 const p = try
-    @assert length(ARGS) == 2 && ARGS[1] == "-p"
-    p = parse(Int, ARGS[2])
+    p = parsed_args["p"]
     RamanujanGraphs.Primes.isprime(p)
     p
 catch ex
@@ -72,6 +99,9 @@ open(joinpath("log", LOGFILE), "w") do io
         CC = AcbField(128)
 
         a,b = SL2p_gens(p)
+        a = SL₂{p}(get(parsed_args, "a", a))
+        b = SL₂{p}(get(parsed_args, "b", b))
+        print(a, " ", b)
 
         Borel_cosets = let p = p, (a,b) = (a,b)
             SL2p, sizes =
