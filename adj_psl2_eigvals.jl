@@ -1,6 +1,7 @@
 using RamanujanGraphs
 using LinearAlgebra
 using Nemo
+using ArgParse
 
 using Logging
 using Dates
@@ -12,24 +13,6 @@ function SL2p_gens(p)
         a, b = let
             a = SL₂{p}([8 14; 4 11])
             b = SL₂{p}([23 0; 14 27])
-            @assert isone(a^10)
-            @assert isone(b^10)
-
-            a, b
-        end
-    elseif p == 41
-        a, b = let
-            a = SL₂{p}([19 26; 29 16])
-            b = SL₂{p}([0 20; 2 6])
-            @assert isone(a^10)
-            @assert isone(b^10)
-
-            a, b
-        end
-    elseif p == 59
-        a, b = let
-            a = SL₂{p}([32 12; 20 2])
-            b = SL₂{p}([14 18; 45 20])
             @assert isone(a^10)
             @assert isone(b^10)
 
@@ -72,9 +55,42 @@ function adjacency(ϱ, CC, a, b)
     return sum(A^i for i = 1:4) + sum(B^i for i = 1:4)
 end
 
+function parse_our_args()
+    s = ArgParseSettings()
+    @add_arg_table! s begin
+        "-p"
+            help = "the prime p for which to use PSL(2,p)"
+            arg_type = Int
+            required = true
+        "-a"
+            help = "generator a (optional)"
+        "-b"
+            help = "generator b (optional)"
+        "--ab"
+            help = "array of generators a and b (optional)"
+    end
+
+    result = parse_args(s)
+    for key in ["a", "b", "ab"]
+        val = get(result, key, "")
+        if val != nothing
+            result[key] = eval(Meta.parse(val))
+        else
+            delete!(result, key)
+        end
+    end
+    val = get(result, "ab", "")
+    if val != ""
+        result["a"] = val[1]
+        result["b"] = val[2]
+    end
+    result
+end
+
+parsed_args = parse_our_args()
+
 const p = try
-    @assert length(ARGS) == 2 && ARGS[1] == "-p"
-    p = parse(Int, ARGS[2])
+    p = parsed_args["p"]
     RamanujanGraphs.Primes.isprime(p)
     p
 catch ex
@@ -90,6 +106,10 @@ open(joinpath("log", LOGFILE), "w") do io
         CC = AcbField(128)
 
         a,b = SL2p_gens(p)
+        a = SL₂{p}(get(parsed_args, "a", a))
+        b = SL₂{p}(get(parsed_args, "b", b))
+        @info "a = " a
+        @info "b = " b
 
         Borel_cosets = let p = p, (a,b) = (a,b)
             SL2p, sizes =
@@ -98,8 +118,7 @@ open(joinpath("log", LOGFILE), "w") do io
             RamanujanGraphs.CosetDecomposition(SL2p, Borel(SL₂{p}))
         end
 
-        all_large_ev = []
-
+        all_large_evs = []
         let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0))
 
             for j = 0:(p-1)÷4
@@ -114,9 +133,9 @@ open(joinpath("log", LOGFILE), "w") do io
                     @time ev = let evs = safe_eigvals(adj)
                         _count_multiplicites(evs)
                     end
+                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
 
                     @info "Principal Series Representation $j" ev[1:2] ev[end]
-                    all_large_ev = vcat(all_large_ev, ev[1:2])
                 catch ex
                     @error "Principal Series Representation $j failed" ex
                     ex isa InterruptException && rethrow(ex)
@@ -148,19 +167,21 @@ open(joinpath("log", LOGFILE), "w") do io
                     @time ev = let evs = safe_eigvals(adj)
                         _count_multiplicites(evs)
                     end
+                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
 
                     @info "Discrete Series Representation $k" ev[1:2] ev[end]
-                    all_large_ev = vcat(all_large_ev, ev[1:2])
                 catch ex
                     @error "Discrete Series Representation $k : failed" ex
                     ex isa InterruptException && rethrow(ex)
                 end
             end
-            print(all_large_ev)
-#            all_large_ev = sort(all_large_ev, rev=true)
-#            lambda = all_large_ev[2]
-#            print(lambda, " ", (lambda - 3)/5, " ", acos((lambda-3)/5), " ", acos((lambda-3)/5)/pi*180)
         end
+        all_large_evs = sort(all_large_evs, rev=true)
+        λ = all_large_evs[2]
+        ε = (λ - 3)/5
+        α = acos(ε)
+        α_deg = α/pi*180
+        @info "Numerically" λ ε α α_deg
     end # with_logger
 end # open(logfile)
 
