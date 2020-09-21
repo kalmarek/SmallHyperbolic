@@ -1,5 +1,6 @@
 [deps]
 AbstractAlgebra = "c3fe647b-3220-5bb0-a1ea-a7954cac585d"
+ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
 Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
