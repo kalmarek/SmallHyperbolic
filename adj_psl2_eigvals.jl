@@ -18,6 +18,15 @@ function SL2p_gens(p)
 
             a, b
         end
+    elseif p == 41
+        a, b = let
+            a = SL₂{p}([0 28; 19 35])
+            b = SL₂{p}([38 27; 2 9])
+            @assert isone(a^10)
+            @assert isone(b^10)
+
+            a, b
+        end
     elseif p == 109
         a, b = let
             a = SL₂{p}([0 1; 108 11])
@@ -56,9 +65,8 @@ function adjacency(ϱ, CC, a, b)
 end
 
 function parse_our_args()
-    print(ARGS)
     s = ArgParseSettings()
-    @add_arg_table s begin
+    @add_arg_table! s begin
         "-p"
             help = "the prime p for which to use PSL(2,p)"
             arg_type = Int
@@ -109,8 +117,7 @@ open(joinpath("log", LOGFILE), "w") do io
         a,b = SL2p_gens(p)
         a = SL₂{p}(get(parsed_args, "a", a))
         b = SL₂{p}(get(parsed_args, "b", b))
-        @info "a = " a
-        @info "b = " b
+        @info "Generators" a b
 
         Borel_cosets = let p = p, (a,b) = (a,b)
             SL2p, sizes =
@@ -119,6 +126,7 @@ open(joinpath("log", LOGFILE), "w") do io
             RamanujanGraphs.CosetDecomposition(SL2p, Borel(SL₂{p}))
         end
 
+        all_large_evs = []
         let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0))
 
             for j = 0:(p-1)÷4
@@ -133,6 +141,7 @@ open(joinpath("log", LOGFILE), "w") do io
                     @time ev = let evs = safe_eigvals(adj)
                         _count_multiplicites(evs)
                     end
+                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
 
                     @info "Principal Series Representation $j" ev[1:2] ev[end]
                 catch ex
@@ -166,6 +175,7 @@ open(joinpath("log", LOGFILE), "w") do io
                     @time ev = let evs = safe_eigvals(adj)
                         _count_multiplicites(evs)
                     end
+                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
 
                     @info "Discrete Series Representation $k" ev[1:2] ev[end]
                 catch ex
@@ -174,6 +184,12 @@ open(joinpath("log", LOGFILE), "w") do io
                 end
             end
         end
+        all_large_evs = sort(all_large_evs, rev=true)
+        λ = all_large_evs[2]
+        ε = (λ - 3)/5
+        α = acos(ε)
+        α_deg = α/pi*180
+        @info "Numerically" λ ε α α_deg
     end # with_logger
 end # open(logfile)
 
