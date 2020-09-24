@@ -141,7 +141,7 @@ open(joinpath("log", LOGFILE), "w") do io
                     @time ev = let evs = safe_eigvals(adj)
                         _count_multiplicites(evs)
                     end
-                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
+                    all_large_evs = append!(all_large_evs, real.(first.(ev[1:2])))
 
                     @info "Principal Series Representation $j" ev[1:2] ev[end]
                 catch ex
@@ -175,7 +175,7 @@ open(joinpath("log", LOGFILE), "w") do io
                     @time ev = let evs = safe_eigvals(adj)
                         _count_multiplicites(evs)
                     end
-                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
+                    all_large_evs = append!(all_large_evs, real.(first.(ev[1:2])))
 
                     @info "Discrete Series Representation $k" ev[1:2] ev[end]
                 catch ex
@@ -184,12 +184,14 @@ open(joinpath("log", LOGFILE), "w") do io
                 end
             end
         end
-        all_large_evs = sort(all_large_evs, rev=true)
+        all_large_evs = sort(all_large_evs, rev=true, lt=<)
+        @assert Nemo.contains(all_large_evs[1], 8)
         λ = all_large_evs[2]
         ε = (λ - 3)/5
         α = acos(ε)
-        α_deg = α/pi*180
-        @info "Numerically" λ ε α α_deg
+        α_deg = α/const_pi(parent(α))*180
+        @info "Certified:" λ ε α α_deg
+        @info "Numerically:" Float64(λ) Float64(ε) Float64(α) Float64(α_deg)
     end # with_logger
 end # open(logfile)
 
