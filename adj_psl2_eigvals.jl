@@ -98,13 +98,10 @@ end
 
 parsed_args = parse_our_args()
 
-const p = try
-    p = parsed_args["p"]
-    RamanujanGraphs.Primes.isprime(p)
+const p = let p = parsed_args["p"]
+    RamanujanGraphs.Primes.isprime(p) ||
+        throw("You need to provide a prime, ex: `julia --project adj_psl2_eigvals.jl -p 31`")
     p
-catch ex
-    @error "You need to provide a prime, ex: `julia adj_psl2_eigvals.jl -p 31`"
-    rethrow(ex)
 end
 
 const LOGFILE = "SL(2,$p)_eigvals_$(now()).log"
@@ -192,6 +189,7 @@ open(joinpath("log", LOGFILE), "w") do io
         α_deg = α/const_pi(parent(α))*180
         @info "Certified:" λ ε α α_deg
         @info "Numerically:" Float64(λ) Float64(ε) Float64(α) Float64(α_deg)
+
     end # with_logger
 end # open(logfile)
 
