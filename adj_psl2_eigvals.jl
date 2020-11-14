@@ -87,6 +87,10 @@ function parse_our_args()
             help = "generator b (optional)"
         "--ab"
             help = "array of generators a and b (optional)"
+        "--precision"
+            help = "set the precision of computations"
+            arg_type = Int
+            default = 128
     end
 
     result = parse_args(s)
@@ -113,11 +117,14 @@ const p = let p = parsed_args["p"]
     p
 end
 
-const LOGFILE = "SL(2,$p)_eigvals_$(now()).log"
+const PRECISION = parsed_args["precision"]
+const LOGFILE = joinpath("log", "SL(2,$p)_eigvals_$(now()).log")
 
-open(joinpath("log", LOGFILE), "w") do io
+open(LOGFILE, "w") do io
+    @info "Logging into $LOGFILE"
     with_logger(SimpleLogger(io)) do
 
+        @info "Arguments:" args=parsed_args
 
         a,b = SL2p_gens(p)
         a = SL₂{p}(get(parsed_args, "a", a))
