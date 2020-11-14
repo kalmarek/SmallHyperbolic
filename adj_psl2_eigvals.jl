@@ -6,9 +6,12 @@ using ArgParse
 using Logging
 using Dates
 
+import RamanujanGraphs.Primes: isprime
+
 include(joinpath(@__DIR__, "src", "eigen_utils.jl"))
 
-function SL2p_gens(p)
+function SL2p_gens(p::Integer)
+    @assert isprime(p)
     if p == 31
         a, b = let
             a = SL₂{p}([8 14; 4 11])
@@ -98,13 +101,9 @@ end
 
 parsed_args = parse_our_args()
 
-const p = try
-    p = parsed_args["p"]
-    RamanujanGraphs.Primes.isprime(p)
+const p = let p = parsed_args["p"]
+    isprime(p) || @error "You need to provide a prime, ex: `julia adj_psl2_eigvals.jl -p 31`"
     p
-catch ex
-    @error "You need to provide a prime, ex: `julia adj_psl2_eigvals.jl -p 31`"
-    rethrow(ex)
 end
 
 const LOGFILE = "SL(2,$p)_eigvals_$(now()).log"
