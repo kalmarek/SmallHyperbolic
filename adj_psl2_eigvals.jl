@@ -200,8 +200,8 @@ open(LOGFILE, "w") do io
         λ = all_large_evs[2]
         ε = (λ - 3)/5
         α = acos(ε)
-        α_deg = α/pi*180
-        @info "Numerically" λ ε α α_deg
+        α_deg = (α/pi)*180
+        @info "Certified values:" λ ε α α_deg
     end # with_logger
 end # open(logfile)
 
