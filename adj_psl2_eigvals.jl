@@ -1,12 +1,12 @@
 using RamanujanGraphs
 using LinearAlgebra
-using Nemo
+using Arblib
 using ArgParse
 
 using Logging
 using Dates
 
-include("src/nemo_utils.jl")
+include(joinpath(@__DIR__, "src", "eigen_utils.jl"))
 
 function SL2p_gens(p)
     if p == 31
