@@ -60,11 +60,18 @@ function SL2p_gens(p::Integer)
     return a,b
 end
 
-function adjacency(ϱ, CC, a, b)
-    A = matrix(CC, ϱ(a))
-    B = matrix(CC, ϱ(b))
+function adjacency(ϱ, a, b; prec=256)
+    order_a = findfirst(i-> isone(a^i), 1:100)
+    order_b = findfirst(i-> isone(b^i), 1:100)
+    @assert !isnothing(order_a) && order_a > 1
+    @assert !isnothing(order_b) && order_b > 1
 
-    return sum(A^i for i = 1:4) + sum(B^i for i = 1:4)
+    k = order_a-1 + order_b-1
+
+    A = AcbMatrix(ϱ(a), prec=prec)
+    B = AcbMatrix(ϱ(b), prec=prec)
+    res = sum(A^i for i = 1:order_a-1) + sum(B^i for i = 1:order_b-1)
+    return Arblib.scalar_div!(res, res, k)
 end
 
 function parse_our_args()
@@ -111,7 +118,6 @@ const LOGFILE = "SL(2,$p)_eigvals_$(now()).log"
 open(joinpath("log", LOGFILE), "w") do io
     with_logger(SimpleLogger(io)) do
 
-        CC = AcbField(128)
 
         a,b = SL2p_gens(p)
         a = SL₂{p}(get(parsed_args, "a", a))
@@ -125,24 +131,24 @@ open(joinpath("log", LOGFILE), "w") do io
             RamanujanGraphs.CosetDecomposition(SL2p, Borel(SL₂{p}))
         end
 
-        all_large_evs = []
+        all_large_evs = Arb[]
         let α = RamanujanGraphs.generator(RamanujanGraphs.GF{p}(0))
 
             for j = 0:(p-1)÷4
                 h = PrincipalRepr(
-                    α => root_of_unity(CC, (p - 1) ÷ 2, j),
+                    α => unit_root((p - 1) ÷ 2, j, prec=PRECISION),
                     Borel_cosets,
                 )
 
-                @time adj = adjacency(h, CC, a, b)
+                @time adj = adjacency(h, a, b, prec=PRECISION)
 
                 try
-                    @time ev = let evs = safe_eigvals(adj)
-                        _count_multiplicites(evs)
+                    @time evs = let evs = safe_eigvals(adj)
+                        count_multiplicites(evs)
                     end
-                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
+                    append!(all_large_evs, [real(first(x)) for x in evs[1:2]])
 
-                    @info "Principal Series Representation $j" ev[1:2] ev[end]
+                    @info "Principal Series Representation $j" evs[1:2] evs[end]
                 catch ex
                     @error "Principal Series Representation $j failed" ex
                     ex isa InterruptException && rethrow(ex)
@@ -155,28 +161,28 @@ open(joinpath("log", LOGFILE), "w") do io
 
             if p % 4 == 1
                 ub = (p - 1) ÷ 4
-                ζ = root_of_unity(CC, (p + 1) ÷ 2, 1)
+                ζ = unit_root((p + 1) ÷ 2, 1, prec=PRECISION)
             else # p % 4 == 3
                 ub = (p + 1) ÷ 4
-                ζ = root_of_unity(CC, (p + 1), 1)
+                ζ = unit_root((p + 1), 1, prec=PRECISION)
             end
 
             for k = 1:ub
 
                 h = DiscreteRepr(
-                    RamanujanGraphs.GF{p}(1) => root_of_unity(CC, p),
+                    RamanujanGraphs.GF{p}(1) => unit_root(p, prec=PRECISION),
                     β => ζ^k,
                 )
 
-                @time adj = adjacency(h, CC, a, b)
+                @time adj = adjacency(h, a, b, prec=PRECISION)
 
                 try
-                    @time ev = let evs = safe_eigvals(adj)
-                        _count_multiplicites(evs)
+                    @time evs = let evs = safe_eigvals(adj)
+                        count_multiplicites(evs)
                     end
-                    all_large_evs = vcat(all_large_evs, [Float64(real(x[1])) for x in ev[1:2]])
+                    append!(all_large_evs, [real(first(x)) for x in evs[1:2]])
 
-                    @info "Discrete Series Representation $k" ev[1:2] ev[end]
+                    @info "Discrete Series Representation $k" evs[1:2] evs[end]
                 catch ex
                     @error "Discrete Series Representation $k : failed" ex
                     ex isa InterruptException && rethrow(ex)
