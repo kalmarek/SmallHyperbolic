@@ -1,11 +1,11 @@
 The repository contains code for running experiments for
-_Hyperbolic generalized triangle groups_ by
+[_Hyperbolic generalized triangle groups, property (T) and finite simple quotients_](https://arxiv.org/abs/2011.09276) by
 [Pierre-Emmanuel Caprace](https://perso.uclouvain.be/pierre-emmanuel.caprace/),
 [Marston Conder](https://www.math.auckland.ac.nz/~conder/),
 [Marek Kaluba](https://kalmar.faculty.wmi.amu.edu.pl/) and
 [Stefan Witzel](https://www.math.uni-bielefeld.de/~switzel/).
 
-There are two disjoint computations covered in this repository.
+There are three disjoint computations covered in this repository.
 
 ## Eigenvalues computations for _PSL₂(p)_
 
@@ -138,3 +138,14 @@ One can perform those computations in bulk by e.g. calling
 make 2_4_4
 ```
 to run all examples in `presentations_2_4_4.txt` in parallel.
+
+## Creating the tables of [arXiv:2011.09276](https://arxiv.org/abs/2011.09276)
+
+The scripts are located in `magma` directory and thoroughly commented.
+There are two files, one contains the core Magma code used to create the tables,
+the other one is a python script that augments the magma file by a list of
+hyperbolic words. To use it put both files in a common folder, run
+```bash
+python3 hyperbolic_words.py
+```
+and then load the resulting file `small_hyperbolic.magma` in Magma.
