@@ -26,3 +26,49 @@ function parse_grouppresentations_abstract(filename::AbstractString)
     end
     return groups
 end
+
+# parse_grouppresentations_abstract("./data/presentations_2_4_4.txt")
+
+function _tf_missing(x::Any)
+    s = strip(x)
+    mis = !isnothing(match(r"(\?)*", x))
+    no = !isnothing(match(r"no"i, x))
+    yes = !isnothing(match(r"yes"i, x))
+    mis && return missing
+    yes && !no && return true
+    !yes && no && return false
+    throw(ArgumentError("Unrecognized option: $x"))
+end
+
+function parse_vec(s::AbstractString)
+    m = match(r"^\s*\[(.*)\]\s*$", s)
+    isnothing(m) && throw("String does not seem to represent a vector: $s")
+    content = m[1]
+    return strip.(split(content, ','))
+end
+
+parse_vec(T::Type{<:AbstractString}, s::AbstractString) = T.(parse_vec(s))
+function parse_vec(::Type{T}, s::AbstractString) where {T<:Number}
+    v = parse_vec(String, s)
+    isempty(v) && return T[]
+    length(v) == 1 && isempty(first(v)) && return T[]
+    return parse.(T, parse_vec(String, s))
+end
+
+function parse_vec(
+    ::Type{T},
+    s::AbstractString,
+) where {A<:AbstractString,B<:Number,T<:Tuple{A,B}}
+    v = parse_vec(s)
+    if length(v) == 1
+        @assert isempty(first(v))
+        return Tuple{A,B}[]
+    end
+    @assert iseven(length(v))
+    return map(1:2:length(v)) do i
+        @assert first(v[i]) == '(' && last(v[i+1]) == ')'
+        key = v[i][begin+1:end]
+        val = v[i+1][begin:end-1]
+        (A(key), parse(B, val))
+    end
+end
