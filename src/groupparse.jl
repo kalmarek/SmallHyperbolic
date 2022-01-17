@@ -6,13 +6,15 @@ const COMMUTATOR_regex = r"\((?<comm>[\w](\s?,\s?[\w]){1+})\)"
 iscomment(line) = startswith(line, "//")
 ismagma_presentation(line) = (m = match(MAGMA_PRESENTATION_regex, line); return !isnothing(m), m)
 
-function parse_magma_fpgroup(str::AbstractString)
+
+
+function split_magma_presentation(str::AbstractString)
     m = match(MAGMA_PRESENTATION_regex, str)
     gens_str = strip.(split(m[:gens], ","))
     rels_str = m[:rels]
     split_indices = [0]
-    in_function_call=0
-    for (i,s) in enumerate(rels_str)
+    in_function_call = 0
+    for (i, s) in enumerate(rels_str)
         if s == '('
             in_function_call += 1
         elseif s == ')'
@@ -23,13 +25,20 @@ function parse_magma_fpgroup(str::AbstractString)
         end
     end
     @assert in_function_call == 0
-    push!(split_indices, length(rels_str)+1)
+    push!(split_indices, length(rels_str) + 1)
 
-    rels_strs = [strip.(String(rels_str[s+1:e-1])) for (s,e) in zip(split_indices, Iterators.rest(split_indices, 2))]
+    rels_strs = [
+        strip.(String(rels_str[s+1:e-1])) for
+        (s, e) in zip(split_indices, Iterators.rest(split_indices, 2))
+    ]
 
     # rels_strs = replace.(rels_strs, COMMUTATOR_regex=> s"comm(\g<comm>)")
     # @show rels_strs
+    return gens_str, rels_strs
+end
 
+function parse_magma_fpgroup(str::AbstractString)
+    gens_str, rels_strs = split_magma_presentation(str)
     return parse_magma_fpgroup(gens_str, rels_strs)
 end
 
