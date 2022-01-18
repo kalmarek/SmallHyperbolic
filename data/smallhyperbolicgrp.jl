@@ -1,4 +1,5 @@
 struct TriangleGrp
+    type::NTuple{3,Int}
     generators::Vector{String}
     relations::Vector{String}
     order1::Int
@@ -21,9 +22,9 @@ _name(G) = "G_$(G.order1)_$(G.order2)_$(G.order3)_$(G.index)"
 name(G::TriangleGrp) = _name(G)
 grp_name(nt::NamedTuple) = _name(nt)
 
-latex_name(G::TriangleGrp) ="\$G^{$(G.order1),$(G.order2),$(G.order3)}_$(G.index)"
+latex_name(G::TriangleGrp) = "\$G^{$(G.order1),$(G.order2),$(G.order3)}_$(G.index)"
 
-function TriangleGrp(generators, relations, nt::NamedTuple)
+function TriangleGrp(type::NTuple{3,Int}, generators, relations, nt::NamedTuple)
     # @assert fieldnames(SmallHyperbolicGrp) == propertynames(nt)
     hyperbolic, witness = if hasproperty(nt, :hyperbolic)
         h = _tf_missing(nt.hyperbolic)
@@ -37,6 +38,7 @@ function TriangleGrp(generators, relations, nt::NamedTuple)
     end
 
     TriangleGrp(
+        type,
         convert(Vector{String}, generators),
         convert(Vector{String}, relations),
         convert(Int, nt.order1),
