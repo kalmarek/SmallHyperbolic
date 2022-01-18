@@ -1,10 +1,11 @@
-comm(a,b) = inv(a)*inv(b)*a*b
-comm(a,b,args...) = comm(comm(a,b), args...)
+comm(a, b) = inv(a) * inv(b) * a * b
+comm(a, b, args...) = comm(comm(a, b), args...)
 
 const MAGMA_PRESENTATION_regex = r"Group<\s?(?<gens>.*)\s?\|\s?(?<rels>.*)\s?>"
 const COMMUTATOR_regex = r"\((?<comm>[\w](\s?,\s?[\w]){1+})\)"
 iscomment(line) = startswith(line, "//")
-ismagma_presentation(line) = (m = match(MAGMA_PRESENTATION_regex, line); return !isnothing(m), m)
+ismagma_presentation(line) =
+    (m = match(MAGMA_PRESENTATION_regex, line); return !isnothing(m), m)
 
 
 
@@ -42,7 +43,10 @@ function parse_magma_fpgroup(str::AbstractString)
     return parse_magma_fpgroup(gens_str, rels_strs)
 end
 
-function parse_magma_fpgroup(gens_str::AbstractVector{<:AbstractString}, rels_str::AbstractVector{<:AbstractString})
+function parse_magma_fpgroup(
+    gens_str::AbstractVector{<:AbstractString},
+    rels_str::AbstractVector{<:AbstractString},
+)
 
     gens_arr = Symbol.(gens_str)
     gens_expr = Expr(:tuple, gens_arr...)
@@ -52,16 +56,16 @@ function parse_magma_fpgroup(gens_str::AbstractVector{<:AbstractString}, rels_st
 
     F = FreeGroup(String.(gens_str))
     relations = @eval begin
-        $gens_expr = AbstractAlgebra.gens($F);
+        $gens_expr = AbstractAlgebra.gens($F)
         $rels_expr
     end
 
-    return F/relations
+    return F / relations
 end
 
 function parse_grouppresentations(filename::AbstractString)
     lines = strip.(readlines(filename))
-    groups = Dict{String, FPGroup}()
+    groups = Dict{String,FPGroup}()
     group_regex = r"(?<name>\w.*)\s?:=\s?(?<group_str>Group.*)"
     for line in lines
         isempty(line) && continue
