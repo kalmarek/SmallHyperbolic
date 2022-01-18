@@ -1,5 +1,5 @@
 struct TriangleGrp
-    type::NTuple{3,Int}
+    half_girth_type::NTuple{3,Int}
     generators::Vector{String}
     relations::Vector{String}
     order1::Int
@@ -15,7 +15,7 @@ struct TriangleGrp
     L2_quotients::Vector{String}
     quotients::Vector{Pair{String,Int}}
     alternating_quotients::Vector{Int}
-    maximal_order_alt_quo::Int
+    maximal_degree_alternating_quotients::Int
 end
 
 _name(G) = "G_$(G.order1)_$(G.order2)_$(G.order3)_$(G.index)"
