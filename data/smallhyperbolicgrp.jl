@@ -24,21 +24,34 @@ grp_name(nt::NamedTuple) = _name(nt)
 
 latex_name(G::TriangleGrp) = "\$G^{$(G.order1),$(G.order2),$(G.order3)}_$(G.index)"
 
-function TriangleGrp(type::NTuple{3,Int}, generators, relations, nt::NamedTuple)
-    # @assert fieldnames(SmallHyperbolicGrp) == propertynames(nt)
-    hyperbolic, witness = if hasproperty(nt, :hyperbolic)
-        h = _tf_missing(nt.hyperbolic)
-        nh_w = nt.witnesses_for_non_hyperbolicity
-        w = isempty(strip(nh_w)) ? missing : parse_vec(String, '[' * nh_w * ']')
-        h, w
-    elseif 1 // nt.order1 + 1 // nt.order2 + 1 // nt.order3 < 1
-        true, missing
+function _ishyperbolic(half_girth_type, nt::NamedTuple)
+    a, b, c = half_girth_type
+    if 1 // a + 1 // b + 1 // c < 1
+        return true, missing
+    elseif hasproperty(nt, :hyperbolic)
+        hyperbolic = _tf_missing(nt.hyperbolic)
+        nh_witnesses = let w = strip(nt.witnesses_for_non_hyperbolicity)
+            isempty(w) ? missing : parse_vec(String, '[' * w * ']')
+        end
+        @debug "$(nt.hyperbolic) was parsed as $hyperbolic" nh_witnesses
+        if hyperbolic isa Bool && hyperbolic
+            @assert ismissing(nh_witnesses)
+        end
+        if !ismissing(nh_witnesses)
+            @assert !hyperbolic
+        end
+        return hyperbolic, nh_witnesses
     else
-        missing, missing
+        return missing, missing
     end
+end
+
+function TriangleGrp(half_girth_type::NTuple{3,Int}, generators, relations, nt::NamedTuple)
+    # @assert fieldnames(SmallHyperbolicGrp) == propertynames(nt)
+    hyperbolic, witness = _ishyperbolic(half_girth_type, nt)
 
     TriangleGrp(
-        type,
+        half_girth_type,
         convert(Vector{String}, generators),
         convert(Vector{String}, relations),
         convert(Int, nt.order1),
