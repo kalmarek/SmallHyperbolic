@@ -20,7 +20,11 @@ tr_grps =
             isfile(joinpath(@__DIR__, f)) && endswith(f, ".csv")
         ]
 
-        trGrps = map(csvs) do file
+        trGrps = mapreduce(union, csvs) do file
+            m = match(r".*_(\d)_(\d)_(\d).csv", basename(file))
+            @assert !isnothing(m)
+            type = parse.(Int, tuple(m[1], m[2], m[3]))
+
             data = readdlm(file, '&')
             labels = Symbol.(replace.(strip.(data[1, :]), ' ' => '_', '-' => '_'))
             groups = data[2:end, :]
@@ -28,18 +32,14 @@ tr_grps =
                 nt = (; (Symbol(l) => v for (l, v) in zip(labels, props))...)
                 @debug i, grp_name(nt)
                 P = all_grps_presentations[grp_name(nt)]
-                grp = TriangleGrp(P.generators, P.relations, nt)
-                latex_name(grp) => grp
-            end |> Dict
-
-            m = match(r".*_(\d)_(\d)_(\d).csv", basename(file))
-            @assert !isnothing(m)
-            type = parse.(Int, tuple(m[1], m[2], m[3]))
-            type => grps
-        end |> Dict
-        # Dict(name(G) => G for G in trGrps)
+                grp = TriangleGrp(type, P.generators, P.relations, nt)
+            end
+        end
     end
 
 open(joinpath(@__DIR__, "triangle_groups.json"), "w") do io
-    JSON.print(io, tr_grps, 4)
+    f(args...) = show_json(args...; indent = 4)
+    s = sprint(f, TriangleGrpSerialization(), tr_grps)
+    # JSON.print(io, , 4)
+    print(io, s)
 end

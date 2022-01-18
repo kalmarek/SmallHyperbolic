@@ -58,4 +58,16 @@ function TriangleGrp(type::NTuple{3,Int}, generators, relations, nt::NamedTuple)
     )
 end
 
+import DataStructures
 
+import JSON.Serializations: CommonSerialization, StandardSerialization
+import JSON.Writer: StructuralContext, show_json
+struct TriangleGrpSerialization <: CommonSerialization end
+
+function show_json(io::StructuralContext, ::TriangleGrpSerialization, G::TriangleGrp)
+    D = DataStructures.OrderedDict{Symbol,Any}(:name => latex_name(G))
+    for fname in fieldnames(TriangleGrp)
+        D[fname] = getfield(G, fname)
+    end
+    return show_json(io, StandardSerialization(), D)
+end
