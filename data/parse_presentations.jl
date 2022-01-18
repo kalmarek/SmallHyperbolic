@@ -29,15 +29,16 @@ end
 
 # parse_grouppresentations_abstract("./data/presentations_2_4_4.txt")
 
-function _tf_missing(x::Any)
+function _tf_missing(x::AbstractString)
     s = strip(x)
-    mis = !isnothing(match(r"(\?)*", x))
-    no = !isnothing(match(r"no"i, x))
-    yes = !isnothing(match(r"yes"i, x))
-    mis && return missing
-    yes && !no && return true
-    !yes && no && return false
-    throw(ArgumentError("Unrecognized option: $x"))
+    yes = !isnothing(match(r"yes"i, s))
+    no = !isnothing(match(r"no"i, s))
+    mis = !isnothing(match(r"(\?)+", s))
+    @debug "string for true/false/missing : $s" parsed=(yes, no, mis)
+    yes && !no && !mis && return true
+    !yes && no && !mis && return false
+    !yes && !no && mis && return missing
+    throw(ArgumentError("Unrecognized string as true/false/missing: $x"))
 end
 
 function parse_vec(s::AbstractString)
