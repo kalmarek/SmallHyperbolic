@@ -22,7 +22,7 @@ _name(G) = "G_$(G.order1)_$(G.order2)_$(G.order3)_$(G.index)"
 name(G::TriangleGrp) = _name(G)
 grp_name(nt::NamedTuple) = _name(nt)
 
-latex_name(G::TriangleGrp) = "\$G^{$(G.order1),$(G.order2),$(G.order3)}_$(G.index)"
+latex_name(G::TriangleGrp) = "G^{$(G.order1),$(G.order2),$(G.order3)}_$(G.index)"
 
 function _ishyperbolic(half_girth_type, nt::NamedTuple)
     a, b, c = half_girth_type
@@ -46,9 +46,26 @@ function _ishyperbolic(half_girth_type, nt::NamedTuple)
     end
 end
 
+function _sanitize_group_name(s::AbstractString)
+    s = replace(s, '$'=>"")
+    s = replace(s, "\\infty"=>"inf")
+    s = replace(s, r"\\textrm{(.*?)}"=>s"\1")
+    s = replace(s, r"(Alt)_{(\d+)}"=>s"\1(\2)")
+    s = replace(s, "_{}"=>"")
+    return s
+end
+
 function TriangleGrp(half_girth_type::NTuple{3,Int}, generators, relations, nt::NamedTuple)
     # @assert fieldnames(SmallHyperbolicGrp) == propertynames(nt)
     hyperbolic, witness = _ishyperbolic(half_girth_type, nt)
+
+    l2_quotients = let v = _sanitize_group_name.(parse_vec(String, nt.L2_quotients))
+        if isempty(v) || (length(v)==1 && isempty(first(v)))
+            Vector{String}()
+        else
+            String.(v)
+        end
+    end
 
     TriangleGrp(
         half_girth_type,
@@ -64,8 +81,8 @@ function TriangleGrp(half_girth_type::NTuple{3,Int}, generators, relations, nt::
         _tf_missing(nt.virtually_torsion_free),
         _tf_missing(nt.Kazhdan),
         convert(Int, nt.abelianization_dimension),
-        parse_vec(String, nt.L2_quotients),
-        [Pair(p...) for p in parse_vec(Tuple{String,Int}, nt.quotients)],
+        l2_quotients,
+        [Pair(_sanitize_group_name(p[1]), p[2]) for p in parse_vec(Tuple{String,Int}, nt.quotients)],
         parse_vec(Int, nt.alternating_quotients),
         convert(Int, nt.maximal_order_for_alternating_quotients),
     )
