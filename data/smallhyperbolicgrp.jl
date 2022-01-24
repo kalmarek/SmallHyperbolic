@@ -129,7 +129,7 @@ end
 
 function show_json(io::StructuralContext, ::TriangleGrpSerialization, G::TriangleGrp)
     D = DataStructures.OrderedDict{Symbol,Any}(:name => latex_name(G))
-    D[:name_uft8] = _to_utf8(D[:name])
+    D[:name_utf8] = _to_utf8(D[:name])
     for fname in fieldnames(TriangleGrp)
         D[fname] = getfield(G, fname)
     end
