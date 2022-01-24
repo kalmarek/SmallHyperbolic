@@ -94,10 +94,46 @@ import JSON.Serializations: CommonSerialization, StandardSerialization
 import JSON.Writer: StructuralContext, show_json
 struct TriangleGrpSerialization <: CommonSerialization end
 
+function subscriptify(n::Integer)
+    n, sgn = abs(n), sign(n)
+    # Char(0x2080) == '₀'
+    s = join(Char(0x2080+d) for d in reverse(digits(n)))
+    return sgn >= 0 ? s : "₋"*s
+end
+
+function superscriptify(n::Integer)
+    n, sgn = abs(n), sign(n);
+    # (Char(0x2070), '¹', '²', '³', [Char(0x2070+i) for i in 4:9]...)
+    dgts = ('⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹')
+    s = join(dgts[d+1] for d in reverse(digits(n)))
+    return sgn >= 0 ? s : "⁻"*s
+end
+
+function _to_utf8(s::AbstractString)
+    s = _sanitize_group_name(s)
+    while (m = match(r"(_{(-?\d+)}|_(\d))", s)) !== nothing
+        n = parse(Int, something(m[2], m[3]))
+        s = replace(s, m[1]=>subscriptify(n))
+    end
+    while (m = match(r"(\^{(-?\d+)}|\^(\d))", s)) !== nothing
+        n = parse(Int, something(m[2], m[3]))
+        s = replace(s, m[1]=>superscriptify(n))
+    end
+    if (m = match(r"G(\^{(\d+),(\d+),(\d+)})", s)) !== nothing
+        i,j,k = superscriptify.(parse.(Int, (m[2], m[3], m[4])))
+        s = replace(s, m[1] => "$(i)'$(j)'$(k)")
+    end
+    s = replace(s, "{}"=>"")
+    return s
+end
+
 function show_json(io::StructuralContext, ::TriangleGrpSerialization, G::TriangleGrp)
     D = DataStructures.OrderedDict{Symbol,Any}(:name => latex_name(G))
+    D[:name_uft8] = _to_utf8(D[:name])
     for fname in fieldnames(TriangleGrp)
         D[fname] = getfield(G, fname)
     end
+    D[:L2_quotients_utf8] = _to_utf8.(D[:L2_quotients])
+    D[:quotients_utf8] = [Pair(_to_utf8(k), v) for (k,v) in D[:quotients]]
     return show_json(io, StandardSerialization(), D)
 end
