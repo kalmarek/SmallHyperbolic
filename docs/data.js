@@ -10,6 +10,15 @@ async function fetch_json(url) {
     }
 }
 
+function filter_group_json(obj) {
+    for (let key of Object.keys(obj)) {
+        if (key.match(/utf8/) != null) {
+            delete obj[key];
+        }
+    }
+    return obj
+}
+
 function columnName(key) {
     let words = key.split("_");
     for (let i = 0; i < words.length; i++) {
@@ -34,6 +43,7 @@ function fillRow(row, group_json) {
     for (let key of Object.keys(group_json)) {
         let cell = row.insertCell();
         let cell_content;
+        // swtich(key){
         let value = group_json[key]
         if (key == "quotients" || key == "quotients_utf8") {
             cell_content = JSON.stringify(value);
@@ -50,6 +60,9 @@ function fillRow(row, group_json) {
 }
 
 function fillTableFromJson(table, json) {
+    for (let i=0; i<json.length; i++) {
+        json[i] = filter_group_json(json[i]);
+    }
     let keys = Object.keys(json[0]);
     for (let group of json) {
         let row = table.insertRow();
@@ -58,22 +71,79 @@ function fillTableFromJson(table, json) {
     generateTableHead(table, keys);
 }
 
-// table.setData(groups_url);
+function rerender_with_katex(elt) {
+    let txt = elt.textContent;
+    if (txt != null && txt != ""  && txt != "null") {
+        let txt = elt.textContent
+            .replace(/\*/g, "")
+            .replace(/-1/g, "{-1}")
+            .replace(/inf/g, "\\infty")
+            ;
+        katex.render(txt, elt);
+    }
+}
+
+function rerender_columns_katex(table, columns = [
+        "name",
+        "generators",
+        "relations",
+        "witnesses non hyperbolictity",
+        "L2 quotients",
+    ]) {
+    let header = table.rows[0];
+    let column_indices = [];
+
+    for (let col_idx = 0; col_idx < header.cells.length; col_idx++) {
+        let label = header.cells[col_idx].textContent;
+        let found = columns.indexOf(label);
+        if (found >= 0) {
+            column_indices.push(col_idx);
+            columns.splice(found, 1);
+        }
+    }
+
+    if (columns.length != 0) {
+        console.log("In Katexify: some columns were not found! " + columns);
+    }
+
+    for (let col_idx of column_indices) {
+        // we're skipping the header row
+        for (let row of table.rows) {
+            if ( row == header ) { continue; }
+            rerender_with_katex(row.cells[col_idx]);
+        }
+    }
+
+    return table
+}
 
 const filtersConfig = {
     base_path: 'tablefilter/',
-    autofilter: {
-                    delay: 200
+    auto_filter: {
+                    delay: 400
                 },
     filters_row_index: 1,
+    highlight_keywords: true,
+    responsive: true,
     state: true,
+    sticky_headers: true,
+    // popup_filters: true,
+    no_results_message: true,
     alternate_rows: true,
+    mark_active_columns: true,
     rows_counter: true,
     btn_reset: true,
     status_bar: true,
-    msg_filter: 'Filtering...'
+    msg_filter: 'Filtering...',
+    extensions: [{
+        name: 'colsVisibility',
+        at_start: [2,4,5,6,7,15],
+        text: 'Hidden Columns: ',
+        enable_tick_all: true
+    }, {
+        name: 'sort'
+    }]
 };
-
 
 async function setup_table(data) {
     fillTableFromJson(table, data);
@@ -94,3 +164,8 @@ let filtered_table = fetch_json(groups_url)
     .then(setup_filter)
 ;
 
+let button = document.getElementById("katexify");
+button.addEventListener("click", ()=>{
+    rerender_columns_katex(table);
+    button.disabled = true;
+});
