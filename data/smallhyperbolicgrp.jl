@@ -55,6 +55,15 @@ function _sanitize_group_name(s::AbstractString)
     return s
 end
 
+function _delatexify(dict)
+    map(dict) do (key, val)
+        key = _sanitize_group_name(key)
+        key = replace(key, r"_{(\d+)}"=>s"\1")
+        key = replace(key, "{}^"=>"")
+        key => val
+    end |> Dict
+end
+
 function TriangleGrp(half_girth_type::NTuple{3,Int}, generators, relations, nt::NamedTuple)
     # @assert fieldnames(SmallHyperbolicGrp) == propertynames(nt)
     hyperbolic, witness = _ishyperbolic(half_girth_type, nt)
@@ -134,6 +143,8 @@ function show_json(io::StructuralContext, ::TriangleGrpSerialization, G::Triangl
         D[fname] = getfield(G, fname)
     end
     D[:L2_quotients_utf8] = _to_utf8.(D[:L2_quotients])
-    D[:quotients_utf8] = [Pair(_to_utf8(k), v) for (k,v) in D[:quotients]]
+    D[:quotients_utf8] = Dict(_to_utf8(k) => v for (k,v) in D[:quotients])
+    D[:quotients_plain] =  _delatexify(D[:quotients])
+    D[:quotients] = Dict(D[:quotients])
     return show_json(io, StandardSerialization(), D)
 end

@@ -6,7 +6,7 @@
         <title>Generalized Triangle Groups</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="details.css">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
             integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ" crossorigin="anonymous">
@@ -26,13 +26,25 @@
                 Generalized Triangle Groups of <a href="https://arxiv.org/abs/2011.09276">2011.09276</a>
             </h3>
             by Pierre-Emmanuel Caprace, Marston Conder, Marek Kaluba and Stefan Witzel.
-            <br>
-            <button type="button" id="katexify">Katexify!</button>
-            <table id='GeneralizedTriangleGroups' border=0 class="dataframe"></table>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="renderWithKatex">
+                <label class="form-check-label" for="renderWithKatex">
+                    Render with KaTeX
+                </label>
+            </div>
+
+            <div>
+                <table id='GeneralizedTriangleGroups' border=0 class="table"></table>
+            </div>
         </div>
     </body>
 
-    <script src="tablefilter/tablefilter.js"></script>
-    <script src="data.js"></script>
+    <script type="text/javascript" src="tablefilter/tablefilter.js"></script>
+
+    <script type="text/javascript" src="math_render.js"></script>
+    <script type="text/javascript" src="create_table.js"></script>
+    <script type="text/javascript" src="filter_table.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 
 </html>
