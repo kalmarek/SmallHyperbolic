@@ -43,7 +43,7 @@ function toggleKaTeX(elt, toggle) {
 
 let math_objects = document.getElementsByClassName("math");
 let katex_switch = document.getElementById("renderWithKatex");
-katex_switch.checked = false;
+katex_switch.checked = true;
 katex_switch.addEventListener(
     "change",
     function () {
