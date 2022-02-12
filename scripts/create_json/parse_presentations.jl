@@ -1,4 +1,4 @@
-include("../src/groupparse.jl")
+include(joinpath(@__DIR__, "..", "..", "src", "groupparse.jl"))
 
 function parse_grouppresentations_abstract(filename::AbstractString)
     lines = strip.(readlines(filename))

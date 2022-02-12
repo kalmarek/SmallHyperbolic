@@ -6,19 +6,22 @@ using JSON
 include(joinpath(@__DIR__, "parse_presentations.jl"))
 include(joinpath(@__DIR__, "smallhyperbolicgrp.jl"))
 
+const DATA_DIR = joinpath(@__DIR__, "..", "..", "data")
+
+function _files_with_extension(dir::AbstractString, ext::AbstractString)
+    return [
+        joinpath(dir, f) for f in readdir(dir) if
+        isfile(joinpath(dir, f)) && endswith(f, '.'*ext)
+    ]
+end
+
 all_grps_presentations =
-    let tables = [
-            joinpath(@__DIR__, f) for f in readdir(@__DIR__) if
-            isfile(joinpath(@__DIR__, f)) && endswith(f, ".txt")
-        ]
+    let tables = _files_with_extension(DATA_DIR, "txt")
         mapreduce(parse_grouppresentations_abstract, union, tables) |> Dict
     end
 
-tr_grps =
-    let csvs = [
-            joinpath(@__DIR__, f) for f in readdir(@__DIR__) if
-            isfile(joinpath(@__DIR__, f)) && endswith(f, ".csv")
-        ]
+grps =
+    let csvs = _files_with_extension(DATA_DIR, "csv")
 
         trGrps = mapreduce(union, csvs) do file
             m = match(r".*_(\d)_(\d)_(\d).csv", basename(file))
@@ -37,9 +40,9 @@ tr_grps =
         end
     end
 
-open(joinpath(@__DIR__, "triangle_groups.json"), "w") do io
+open(joinpath(DATA_DIR, "triangle_groups.json"), "w") do io
     f(args...) = show_json(args...; indent = 4)
-    s = sprint(f, TriangleGrpSerialization(), tr_grps)
+    s = sprint(f, TriangleGrpSerialization(), grps)
     # JSON.print(io, , 4)
     print(io, s)
 end
