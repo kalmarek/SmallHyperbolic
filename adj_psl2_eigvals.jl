@@ -57,40 +57,41 @@ function SL2p_gens(p::Integer)
         end
     end
 
-    return a,b
+    return a, b
 end
 
-function adjacency(ϱ, a, b; prec=256)
-    order_a = findfirst(i-> isone(a^i), 1:100)
-    order_b = findfirst(i-> isone(b^i), 1:100)
+function adjacency(ϱ, a, b; prec = 256)
+    order_a = findfirst(i -> isone(a^i), 1:100)
+    order_b = findfirst(i -> isone(b^i), 1:100)
     @assert !isnothing(order_a) && order_a > 1
     @assert !isnothing(order_b) && order_b > 1
 
-    k = order_a-1 + order_b-1
+    k = order_a - 1 + order_b - 1
 
-    A = AcbMatrix(ϱ(a), prec=prec)
-    B = AcbMatrix(ϱ(b), prec=prec)
+    A = AcbMatrix(ϱ(a), prec = prec)
+    B = AcbMatrix(ϱ(b), prec = prec)
     res = sum(A^i for i = 1:order_a-1) + sum(B^i for i = 1:order_b-1)
-    return Arblib.scalar_div!(res, res, k)
+    #return Arblib.scalar_div!(res, res, k)
+    return res
 end
 
 function parse_our_args()
     s = ArgParseSettings()
     @add_arg_table! s begin
         "-p"
-            help = "the prime p for which to use PSL(2,p)"
-            arg_type = Int
-            required = true
+        help = "the prime p for which to use PSL(2,p)"
+        arg_type = Int
+        required = true
         "-a"
-            help = "generator a (optional)"
+        help = "generator a (optional)"
         "-b"
-            help = "generator b (optional)"
+        help = "generator b (optional)"
         "--ab"
-            help = "array of generators a and b (optional)"
+        help = "array of generators a and b (optional)"
         "--precision"
-            help = "set the precision of computations"
-            arg_type = Int
-            default = 128
+        help = "set the precision of computations"
+        arg_type = Int
+        default = 128
     end
 
     result = parse_args(s)
@@ -113,7 +114,8 @@ end
 parsed_args = parse_our_args()
 
 const p = let p = parsed_args["p"]
-    isprime(p) || @error "You need to provide a prime, ex: `julia adj_psl2_eigvals.jl -p 31`"
+    isprime(p) ||
+        @error "You need to provide a prime, ex: `julia adj_psl2_eigvals.jl -p 31`"
     p
 end
 
@@ -124,14 +126,14 @@ open(LOGFILE, "w") do io
     @info "Logging into $LOGFILE"
     with_logger(SimpleLogger(io)) do
 
-        @info "Arguments:" args=parsed_args
+        @info "Arguments:" args = parsed_args
 
-        a,b = SL2p_gens(p)
+        a, b = SL2p_gens(p)
         a = SL₂{p}(get(parsed_args, "a", a))
         b = SL₂{p}(get(parsed_args, "b", b))
         @info "Generators" a b
 
-        Borel_cosets = let p = p, (a,b) = (a,b)
+        Borel_cosets = let p = p, (a, b) = (a, b)
             SL2p, sizes =
                 RamanujanGraphs.generate_balls([a, b, inv(a), inv(b)], radius = 21)
             @assert sizes[end] == RamanujanGraphs.order(SL₂{p})
@@ -143,11 +145,11 @@ open(LOGFILE, "w") do io
 
             for j = 0:(p-1)÷4
                 h = PrincipalRepr(
-                    α => unit_root((p - 1) ÷ 2, j, prec=PRECISION),
+                    α => unit_root((p - 1) ÷ 2, j, prec = PRECISION),
                     Borel_cosets,
                 )
 
-                @time adj = adjacency(h, a, b, prec=PRECISION)
+                @time adj = adjacency(h, a, b, prec = PRECISION)
 
                 try
                     @time evs = let evs = safe_eigvals(adj)
@@ -168,20 +170,20 @@ open(LOGFILE, "w") do io
 
             if p % 4 == 1
                 ub = (p - 1) ÷ 4
-                ζ = unit_root((p + 1) ÷ 2, 1, prec=PRECISION)
+                ζ = unit_root((p + 1) ÷ 2, 1, prec = PRECISION)
             else # p % 4 == 3
                 ub = (p + 1) ÷ 4
-                ζ = unit_root((p + 1), 1, prec=PRECISION)
+                ζ = unit_root((p + 1), 1, prec = PRECISION)
             end
 
             for k = 1:ub
 
                 h = DiscreteRepr(
-                    RamanujanGraphs.GF{p}(1) => unit_root(p, prec=PRECISION),
+                    RamanujanGraphs.GF{p}(1) => unit_root(p, prec = PRECISION),
                     β => ζ^k,
                 )
 
-                @time adj = adjacency(h, a, b, prec=PRECISION)
+                @time adj = adjacency(h, a, b, prec = PRECISION)
 
                 try
                     @time evs = let evs = safe_eigvals(adj)
@@ -196,11 +198,11 @@ open(LOGFILE, "w") do io
                 end
             end
         end
-        all_large_evs = sort(all_large_evs, rev=true)
+        all_large_evs = sort(all_large_evs, rev = true)
         λ = all_large_evs[2]
-        ε = (λ - 3)/5
+        ε = (λ - 3) / 5
         α = acos(ε)
-        α_deg = (α/pi)*180
+        α_deg = (α / pi) * 180
         @info "Certified values:" λ ε α α_deg
     end # with_logger
 end # open(logfile)
