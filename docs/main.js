@@ -1,4 +1,4 @@
-const groups_url = new URL("https://raw.githubusercontent.com/kalmarek/SmallHyperbolic/mk/json/data/triangle_groups.json")
+const groups_url = new URL("https://raw.githubusercontent.com/kalmarek/SmallHyperbolic/master/data/triangle_groups.json")
 
 async function fetch_json(url) {
     try {
@@ -9,6 +9,7 @@ async function fetch_json(url) {
         console.log("Error while fetching json:" + err);
     }
 }
+
 let table = fetch_json(groups_url)
     .then(setup_table)
     .then(setup_filter)
