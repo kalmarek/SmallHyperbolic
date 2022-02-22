@@ -18,8 +18,8 @@ function createMathSpan(content) {
     math_tex.className = "math-tex";
     katex.render(prepareTextForKatex(math_text.innerText), math_tex);
 
-    item.appendChild(math_text);
     item.appendChild(math_tex);
+    item.appendChild(math_text);
 
     return item;
 }
@@ -40,16 +40,3 @@ function toggleKaTeX(elt, toggle) {
         }
     }
 }
-
-let math_objects = document.getElementsByClassName("math");
-let katex_switch = document.getElementById("renderWithKatex");
-katex_switch.checked = true;
-katex_switch.addEventListener(
-    "change",
-    function () {
-        let toggle = this.checked;
-        for (let element of math_objects) {
-            toggleKaTeX(element, toggle);
-        }
-    }
-);
