@@ -152,15 +152,16 @@ async function create_svg(
     }
 
     d3.select("input").on("input", function () {
-        let n = nodes.find(n => n.id == this.value)
+        let id = this.value;
+        let n = nodes.find(n => n.id == id)
         if (n) {
-            foreground_descendants(n.id)
-            // let transform = {k:1, x:n.x, y:n.y}
-            console.log(n)
+            foreground_descendants(id)
 
-            d3.zoom().translateTo(svg_content,n.x, n.y)
-            // console.log(transform)
-            // svg_content.attr("transform", `translate(${n.x/2},${n.y/2})`)
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+
+            zoom.translateTo(svg.transition().duration(750), n.x, n.y)
         }
     });
 
