@@ -1,4 +1,4 @@
-const morphisms_url = new URL("https://raw.githubusercontent.com/kalmarek/SmallHyperbolic/mk/morphisms/data/triangle_groups_morphisms.json")
+const morphisms_url = new URL("https://raw.githubusercontent.com/kalmarek/SmallHyperbolic/master/data/triangle_groups_morphisms.json")
 
 async function fetch_json(url) {
     try {
