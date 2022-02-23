@@ -39,6 +39,10 @@ async function add_search() {
         .attr("id", "datalistOptions")
         ;
 
+    input_grp.insert("div")
+        .classed("form-text", true)
+        .text("Or click to highlight descendants")
+        ;
 }
 
 async function switch_katex(toggle=true) {
