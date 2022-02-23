@@ -68,8 +68,6 @@ async function create_svg(
         .attr("value", n=>n.id)
         .text(n=>n.id)
 
-
-
     const simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id))
         .force("charge", d3.forceManyBody().strength(-400))
@@ -205,7 +203,6 @@ async function create_svg(
 
     const zoom = d3.zoom()
         .scaleExtent([0.2, 5])
-        // .translateExtent([[0, 0], [width, height]])
         .on("zoom", (e) => {
             console.log(e.transform)
             svg_content.attr("transform", e.transform)
