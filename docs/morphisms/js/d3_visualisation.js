@@ -1,7 +1,7 @@
 function drag(simulation) {
 
   function dragstarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
+    if (!event.active) simulation.alphaTarget(0.4).restart();
     d.fx = d.x;
     d.fy = d.y;
   }
@@ -24,11 +24,23 @@ function drag(simulation) {
 }
 
 function linkArc(d) {
-    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+    let r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+    r = 40*Math.exp(r/50)
+    // r = 50 + 2*(r/20)**3
+// Elliptical arc:
+//     return `
+//     M${d.source.x},${d.source.y}
+//     A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+//   `;
+    let xmid = (d.source.x + d.target.x) / 2
+    let ymid = (d.source.y + d.target.y) / 2
+    // cubic smooth Bezier
     return `
-    M${d.source.x},${d.source.y}
-    A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-  `;
+        M${d.source.x} ${d.source.y}
+        S${xmid - 0.01*ymid} ${ymid + 0.01*xmid}
+        ${d.target.x},${d.target.y}
+    `
+    ;
 }
 
 function highlight(node) {
@@ -45,10 +57,6 @@ function dehighlight(node) {
         .attr('opacity', 0.3)
         .attr('filter', 'sepia(0.8)')
         ;
-}
-
-function _union(...arr) {
-    return arr.reduce((first, second) => [...new Set(first.concat(second))]);
 }
 
 async function create_svg(
@@ -69,11 +77,15 @@ async function create_svg(
         .text(n=>n.id)
 
     const simulation = d3.forceSimulation(nodes)
+        // .alphaTarget(0.35)
+        // .alphaDecay(0.5)
         .force("link", d3.forceLink(links).id(d => d.id))
-        .force("charge", d3.forceManyBody().strength(-400))
+        .force("charge", d3.forceManyBody().strength(-500))
         .force("center", d3.forceCenter(width/2, height/2))
         .force("x", d3.forceX())
-        .force("y", d3.forceY());
+        .force("y", d3.forceY().y(d => 100 * (2 * d.level + 1)))
+        .force("radial", d3.forceRadial(d => 20 * (2*d.level), width/2, 0))
+        ;
 
     const svg = d3.create("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
@@ -124,7 +136,6 @@ async function create_svg(
                 )
                 ;
             return all_desc;
-            // return _union(desc, _union(...desc.map(l=>find_descendants(l.target))));
         }
     };
 

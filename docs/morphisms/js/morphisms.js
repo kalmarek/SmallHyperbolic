@@ -48,11 +48,11 @@ async function add_search() {
 async function switch_katex(toggle=true) {
     let math_objects = document.getElementsByClassName("math");
     for (let elt of math_objects) {
-        toggleKaTeX(elt, toggle);
+        await toggleKaTeX(elt, toggle);
         let fObj = elt.parentElement;
         let rect = elt.getElementsByClassName("math-tex")[0].getBoundingClientRect();
-        fObj.setAttribute("width", rect.width+4);
-        fObj.setAttribute("height", rect.height+4);
+        fObj.setAttribute("width", rect.width+8);
+        fObj.setAttribute("height", rect.height+8);
     }
 };
 
