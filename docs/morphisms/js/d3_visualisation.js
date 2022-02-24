@@ -81,11 +81,14 @@ async function create_svg(
         .text(n=>n.id)
 
     const simulation = d3.forceSimulation(nodes)
+        // .alphaTarget(0.35)
+        // .alphaDecay(0.5)
         .force("link", d3.forceLink(links).id(d => d.id))
-        .force("charge", d3.forceManyBody().strength(-400))
+        .force("charge", d3.forceManyBody().strength(-500))
         .force("center", d3.forceCenter(width/2, height/2))
         .force("x", d3.forceX())
-        .force("y", d3.forceY());
+        .force("y", d3.forceY().y(d => 100 * (2 * d.level + 1)))
+        .force("radial", d3.forceRadial(d => 20 * (2*d.level), width/2, 0))
 
     const svg = d3.create("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
