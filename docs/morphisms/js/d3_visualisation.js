@@ -24,11 +24,23 @@ function drag(simulation) {
 }
 
 function linkArc(d) {
-    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+    let r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+    r = 40*Math.exp(r/50)
+    // r = 50 + 2*(r/20)**3
+// Elliptical arc:
+//     return `
+//     M${d.source.x},${d.source.y}
+//     A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+//   `;
+    let xmid = (d.source.x + d.target.x) / 2
+    let ymid = (d.source.y + d.target.y) / 2
+    // cubic smooth Bezier
     return `
-    M${d.source.x},${d.source.y}
-    A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-  `;
+        M${d.source.x} ${d.source.y}
+        S${xmid - 0.01*ymid} ${ymid + 0.01*xmid}
+        ${d.target.x},${d.target.y}
+    `
+    ;
 }
 
 function highlight(node) {
