@@ -1,7 +1,7 @@
 function drag(simulation) {
 
   function dragstarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
+    if (!event.active) simulation.alphaTarget(0.4).restart();
     d.fx = d.x;
     d.fy = d.y;
   }
@@ -59,10 +59,6 @@ function dehighlight(node) {
         ;
 }
 
-function _union(...arr) {
-    return arr.reduce((first, second) => [...new Set(first.concat(second))]);
-}
-
 async function create_svg(
     data,
     width,
@@ -89,6 +85,7 @@ async function create_svg(
         .force("x", d3.forceX())
         .force("y", d3.forceY().y(d => 100 * (2 * d.level + 1)))
         .force("radial", d3.forceRadial(d => 20 * (2*d.level), width/2, 0))
+        ;
 
     const svg = d3.create("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
@@ -139,7 +136,6 @@ async function create_svg(
                 )
                 ;
             return all_desc;
-            // return _union(desc, _union(...desc.map(l=>find_descendants(l.target))));
         }
     };
 
